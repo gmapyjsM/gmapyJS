@@ -48,7 +48,7 @@ em, #map, #map2 {
 	height: 80px;
         width: 400px;
         background-color: whitesmoke;
-        background: whitesmoke url(https://onedrive.live.com/redir?resid=18C9D5AE424CF650%21147) no-repeat 0 0;
+        background: whitesmoke url('https://onedrive.live.com/redir?resid=18C9D5AE424CF650%21147') no-repeat 0 0;
         /*background:white url(logo.png) no-repeat 0 0*/
 }
 
