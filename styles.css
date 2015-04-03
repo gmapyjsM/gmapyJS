@@ -1,0 +1,362 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13.3.2015, 16:20:30
+    Author     : Sam
+*/
+
+#mapa{
+	height: 350px;
+        width: 960px;
+}
+
+em, #map, #map2 {
+	margin:0 auto;
+	height:400px;
+        width: 500px;
+	display:block;
+}
+
+#loaddiv
+{
+    border-right: #785e4f 4px groove;
+    padding-right: 20px;
+    border-top: #785e4f 4px groove;
+    padding-left: 20px;
+    font-weight: bold;
+    z-index: 100;
+    filter: alpha(opacity=75);
+    left: 260px;
+    padding-bottom: 20px;
+    margin-left: auto;
+    border-left: #785e4f 4px groove;
+    width: 250px;
+    margin-right: auto;
+    padding-top: 20px;
+    border-bottom: #785e4f 4px groove;
+    position: absolute;
+    top: 308px;
+    background-color: #FFFFFF; /* BACKGROUND-COLOR: #e7b047; */
+    text-align: center;
+    opacity: .75
+}
+
+#logoPlanner{
+	height: 80px;
+        width: 400px;
+        background-color: whitesmoke;
+        background: whitesmoke url(img/tripPlanner.jpg) no-repeat 0 0;
+        /*background:white url(logo.png) no-repeat 0 0*/
+}
+
+#menu1{
+        position: absolute;
+        top: 7px;
+        left: 31%;
+	height: 38px;
+        width: 550px;
+        z-index: 2;
+        background-color: #000000;
+        border-bottom: 3px solid #3455B9;
+        border-top: 3px solid #3455B9;
+}
+
+#menu2{
+        position: absolute;
+        top: 45px;
+        left: 31%;
+	height: 40px;
+        width: 550px;
+        background-color: appworkspace;
+        border-bottom: 2px solid #3455B9;
+        border-top: 2px solid #3455B9;
+}
+
+#colorCode {
+            width: 60px;
+            height: 10px;
+            padding: 5px;
+            font-weight: bold;
+            resize: none;
+}
+
+/*#DeleteMarkersButton {
+            position: absolute;
+            top: 5px;
+            left: 55%;
+            margin-left: -180px;
+            z-index: 2;
+            background-color: #fff;
+            padding: 5px;
+}*/
+
+#infoBoxHead1 {
+            position: absolute;
+            top: 460px;
+            left: 14%;
+            height: 23px;
+            width: 316px;
+            z-index: 2;
+            margin-left: -180px;
+            background-color: black;
+            color: #fff;
+            padding: 5px;
+}
+
+#showElevate{
+    margin-left: 5px;
+}
+#b5{
+    margin-left: 2px;
+}
+
+#infoBoxHead2 {
+            position: absolute;
+            top: 460px;
+            left: 39%;
+            height: 23px;
+            width: 316px;
+            z-index: 2;
+            margin-left: -180px;
+            background-color: black;
+            color: #fff;
+            padding: 5px;
+}
+
+#showRoute{
+    margin-left: 60px;
+}
+
+#deleteMarkersButton {
+            margin-left: 13px;
+}
+        #createNewDay {
+            margin-left: 15px;
+        }
+        #boxInfo3 {
+            height: 200px; 
+            width: 420px;
+            position: absolute;
+            top: 800px;
+            left: 80%;
+            margin-left: -180px;
+            z-index: 2;
+            background-color: appworkspace;
+            padding: 5px;
+            overflow: auto;
+        }
+        #polygonsF {
+            position: absolute;
+            top: 990px;
+            left: 55%;
+            height: 100px;
+            width: 500px;
+            margin-left: -180px;
+            z-index: 2;
+            padding: 5px;
+        }
+        #elevation_chart {
+            position: absolute;
+            top: 460px;
+            left: 63%;
+            height: 100px;
+            width: 350px;
+            margin-left: -180px;
+            z-index: 2;
+            padding: 5px;
+        }
+        #elevation_chart_last {
+            position: absolute;
+            top: 460px;
+            left: 87%;
+            height: 150px;
+            width: 330px;
+            margin-left: -180px;
+            z-index: 2;
+            padding: 5px;
+        }
+        
+        #itineraryTable {
+            border-top: 3px solid #fff;
+            background-color: gold;
+            height: 40px;
+            width: 330px;
+        }
+        #itineraryBox {
+            position: absolute;
+            top: 40px;
+            left: 87%;
+            height: 290px;
+            width: 330px;
+            margin-left: -180px;
+            border-top: 3px solid #fff;
+            border-left: 3px solid #253D85;
+            border-right: 3px solid #253D85;
+            z-index: 2;
+            background-color: whitesmoke;
+            padding: 5px;
+            overflow: auto;
+        }
+        #jsBox {
+            position: absolute;
+            top: 495px;
+            left: 14%;
+            height: 290px;
+            width: 944px;
+            margin-left: -180px;
+            border-top: 3px solid #fff;
+            border-left: 3px solid #253D85;
+            border-right: 3px solid #253D85;
+            z-index: 2;
+            background-color: whitesmoke;
+            padding: 5px;
+            overflow: auto;
+        }
+        #jsBoxHead {
+            position: absolute;
+            top: 460px;
+            left: 14%;
+            height: 23px;
+            width: 950px;
+            z-index: 2;
+            margin-left: -180px;
+            background-color: black;
+            color: #fff;
+            padding: 5px;
+        }
+        #htmlBoxHead {
+            position: absolute;
+            top: 7px;
+            left: 86%;
+            height: 23px;
+            width: 356px;
+            z-index: 2;
+            margin-left: -180px;
+            background-color: black;
+            color: #fff;
+            padding: 5px;
+        }
+        
+        #htmlBox {
+            position: absolute;
+            top: 40px;
+            left: 86%;
+            height: 400px;
+            width: 350px;
+            margin-left: -180px;
+            border-top: 3px solid #fff;
+            border-left: 3px solid #253D85;
+            border-right: 3px solid #253D85;
+            z-index: 2;
+            background-color: whitesmoke;
+            padding: 5px;
+            overflow: auto;
+        }
+        #itineraryBoxHead {
+            position: absolute;
+            top: 7px;
+            left: 87%;
+            height: 23px;
+            width: 336px;
+            z-index: 2;
+            margin-left: -180px;
+            background-color: black;
+            color: #fff;
+            padding: 5px;
+        }
+        #saveBox {
+            position: absolute;
+            top: 345px;
+            left: 87%;
+            height: 100px;
+            width: 336px;
+            margin-left: -180px;
+            z-index: 2;
+            background-color: silver;
+            padding: 5px;
+        } 
+        #wholeRouteInfo {
+            position: absolute;
+            top: 495px;
+            left: 14%;
+            height: 150px;
+            width: 310px;
+            margin-left: -180px;
+            border-top: 3px solid #fff;
+            border-left: 3px solid #253D85;
+            border-right: 3px solid #253D85;
+            z-index: 2;
+            background-color: whitesmoke;
+            padding: 5px;
+            overflow: auto;
+            font-size: 15px;
+        }
+        #lastRouteInfo {
+            position: absolute;
+            top: 495px;
+            left: 39%;
+            height: 150px;
+            width: 310px;
+            margin-left: -180px;
+            border-top: 3px solid #fff;
+            border-left: 3px solid #253D85;
+            border-right: 3px solid #253D85;
+            z-index: 2;
+            background-color: whitesmoke;
+            padding: 5px;
+            overflow: auto;
+            font-size: 15px;
+        }
+        #infowindow_panel {
+            position: absolute;
+            top: 500px;
+            left: 97%;
+            height: 130px;
+            width: 170px;
+            margin-left: -180px;
+            z-index: 2;
+            background-color: palegoldenrod;
+            padding: 5px;
+        }
+        #drawingPanel {
+            position: absolute;
+            top: 460px;
+            left: 87%;
+            height: 200px;
+            width: 336px;
+            margin-left: -180px;
+            z-index: 2;
+            background-color: lightgray;
+            padding: 5px;
+            overflow: auto;
+        }
+        
+        #kmlString {
+            width: 650px; 
+            height: 500px;
+            padding: 5px;
+            font-weight: bold;
+            resize: none;
+        }
+        #kmlDiv {
+            width: 650px; 
+            height: 500px;
+            padding: 5px;
+            font-weight: bold;
+        }
+        
+        
+.menu {color: #000000; padding: 0; margin: 0; list-style-type: none; display:block}
+.menu ul {margin-top: 0px; position: absolute; visibility: hidden; background-color: #A72135; margin: 0; padding: 0; list-style-type: none;}
+.menu li {float: left; padding: 2px 2px 0 2px; width: 175px; white-space: nowrap;}
+.menu a {padding: 2px; text-align: left; padding-left: 15px; color: #fff; background-color: rgb(52,85,185); display: block; text-decoration: none; font-weight: bold;}
+.menu ul a:link {color: #fff; padding-left: 15px; _padding-left: 19px;}
+.menu ul a:visited {color: #fff; border-bottom: none; padding-left: 15px; _padding-left: 19px;}
+.menu ul a:hover {color: #4f4f4f; background-color: rgb(233,233,233); border-top: 3px solid #253D85;}
+.menu li:hover ul, ul.menu li.hover ul { visibility: visible;}
+.menu li li {float: none; border: none; padding: 0; margin: 0;} 
+        
+   
