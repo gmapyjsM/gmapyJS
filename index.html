@@ -649,10 +649,10 @@ $(document).ready(function() {
         <div id="drawingPanel"> 
             <button id="delete-button" onclick="$.Gmapy.deleteDrawingManagerShape()">Smazat všechny tvary</button>
             <input type="button" name="colorBtn" value="Nastavit křivku" id="setDirectBtn" onclick="$.Gmapy.clearRoutes(); $.Gmapy.displayRoute($($.Gmapy.mapId).data($.Gmapy.markers[0]).getPosition(), $($.Gmapy.mapId).data($.Gmapy.markers[$.Gmapy.markers.length-1]).getPosition(), 'driving', directionOptions());"/>
-            <button type="submit" name="DrivingBtn" id="DrivingBtn" data-name="driving"><img src="img/car.png" alt="autem"/><br/></button>
-            <button type="submit" name="WalkingBtn" id="WalkingBtn" data-name="walking" ><img src="img/walking.png" alt="pěšky"/><br/></button>
-            <button type="submit" name="BicyclingBtn" id="BicyclingBtn" data-name="bicycling" ><img src="img/bicycle.png" alt="na kole"/><br/></button>
-            <button type="submit" name="TransitBtn" id="TransitBtn" data-name="transit" ><img src="img/bus.png" alt="veřejnou dopravou"/><br/></button>
+            <button type="submit" name="DrivingBtn" id="DrivingBtn" data-name="driving"><img src="https://noxzda-bn1305.files.1drv.com/y2pilpX3xegECa6iRpvPvwrUW-hFRJNe8m_BxJgbOjqPaiLYECGxDweZihV5hM4_55ZC0LlqESZLcbyJLM_x63gVO13g2QY4rMEFeuMSeT4i-aS1gKD8aU3jh5amO5KfKcd4blEexYnFnBAfHsDtlcGnQ/car.png?psid=1" alt="autem"/><br/></button>
+            <button type="submit" name="WalkingBtn" id="WalkingBtn" data-name="walking" ><img src="https://noxzda-bn1305.files.1drv.com/y2po31oMUdA2j46Nh34DaJT6_JFWKzf_QL8N0UY_gQI_TqqE1WBkbStVSP_2gno1J224Yi2M-XN3ChIGs1aQBTGpEyNk4vNXFKkDn0GN-EXKWcf1ZqHZ9o0AK9dJd1w4CLMEwCoUAsw9CnyHo5oJBf0tQ/walking.png?psid=1" alt="pěšky"/><br/></button>
+            <button type="submit" name="BicyclingBtn" id="BicyclingBtn" data-name="bicycling" ><img src="https://noxzda-bn1305.files.1drv.com/y2pJw_JG7C9ziO6XNDru62jvo3i0vn5bVMU2UO2ReowBP9eLsYeYQi2Y8ZLWYXFbYzaOtTimkm3qieJLfKW5OiDDjLT5nyNNu6bb-uxGMnBYYIeYLY3M0aBSJLiIk7ub4OvQdJ40cKSWgmWHrWLrPbehA/bicycle.png?psid=1" alt="na kole"/><br/></button>
+            <button type="submit" name="TransitBtn" id="TransitBtn" data-name="transit" ><img src="https://noxzda-bn1305.files.1drv.com/y2ptHx2H0w5NdwuQu_xLX00nkpSFFQGsFWcPqPFhGdP2W-LO2-WQ2lJ14-codOEv4P_CzqhU1y61pdqjO_amVVorRlxDn_xmd9myhhlhPrTixde4AGyMdusS1xgrzsUx9_r_GSVSwLujZxOnvMXhxBq5Q/bus.png?psid=1" alt="veřejnou dopravou"/><br/></button>
             <form id="polyOptions" style="padding-bottom:1px;" action="./" method="post" onsubmit="return false">
                <table>
                    <tr><td><div id="labelColor">Barva křivky: </div></td><td><input type="text" name="color" value="0000FF" id="colorCode" /></td></tr>
