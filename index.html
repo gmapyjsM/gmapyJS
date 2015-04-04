@@ -7,11 +7,12 @@
 
 <link type="text/css" href="styles.css" rel="stylesheet" /> 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true&libraries=drawing"></script>
 <script type="text/javascript" src="gmapy.js"></script>
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script src="https://www.google.com/uds/?file=visualization&amp;v=1&amp;packages=columnchart" type="text/javascript"></script>
+
 
 <script type="text/javascript"   src="http://geoxml3.googlecode.com/svn/branches/polys/geoxml3.js"></script>
 
@@ -86,6 +87,14 @@ $(document).ready(function() {
         var dayIndex = 1;
         var tableRef;
         var tMode;
+        
+        
+        
+        $.Gmapy.addDrawingManager('top-center', 'polyline', [
+      google.maps.drawing.OverlayType.CIRCLE,
+      google.maps.drawing.OverlayType.POLYGON,
+      google.maps.drawing.OverlayType.POLYLINE,
+      google.maps.drawing.OverlayType.RECTANGLE], null, {fillColor: '#ffff00',fillOpacity: 1,strokeWeight: 5,zIndex: 1,editable: true}, null, null, null);
 
 	$.Gmapy.createCircle({
 		id: 'liberec',
@@ -97,7 +106,8 @@ $(document).ready(function() {
         var changeIndex = false;
         var u = 0;
         function pointToItinerary() {
-             var b = 0;    
+             var b = 0; 
+             var orderOfMarker = 0;
              var list = document.getElementById('itineraryBox');
              var ul=document.createElement('ulPoint');
              var li=document.createElement('liPoint');
@@ -114,11 +124,17 @@ $(document).ready(function() {
                 
                 if(changeIndex === true){
                     b = u;
+                    orderOfMarker = b;
+                    orderOfMarker = orderOfMarker +1; 
                 }else{
-                    b = i;  
+                    b = i;
+                    orderOfMarker = b;
+                    orderOfMarker = orderOfMarker +1;
                 }
-                var markerEdit = '<a href="#"> marker </a>' + b + '  ' + '<a href="#"> Smaž </a>';
-                var markerInfoWin = "<input type='text' name='textInfoWindow" + b + "' value='info window" + b + "' id='textInfoWindow" + b + "' /><input type='submit' name='button" + b + "' id='button" + b + "' value='OK' /><select id='markerColor" + b + "' name='markerColor'><option value='http://maps.google.com/mapfiles/ms/icons/purple-dot.png'>fialova</option><option value='http://maps.google.com/mapfiles/ms/icons/red-dot.png'>cervena</option><option value='http://maps.google.com/mapfiles/ms/icons/blue-dot.png'>modra</option><option value='http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'>zluta</option><option value='http://maps.google.com/mapfiles/ms/icons/green-dot.png' selected='selected'>zelena</option></select><input type='submit' name='buttonIcon" + b + "' id='buttonIcon" + b + "' value='Icon' /><br/>";
+                
+                var markerEdit = '<a href="#">' + orderOfMarker + '. marker </a>' + '&nbsp;&nbsp;' + '<button type="submit" name="deleteMarker" id="deleteMarker" value="Smazat marker" title="Smazat marker"><img src="img/deleteIcon.png" alt="Smazat marker"/></button>';
+                //var markerEdit = '<a href="#">' + b + '. marker </a>' + '&nbsp;&nbsp;' + '<button type="submit" name="deleteMarker" id="deleteMarker" value="Smazat marker" title="Smazat marker"><img src="img/deleteIcon.png" alt="Smazat marker"/></button>';
+                var markerInfoWin = "<br/><input type='text' name='textInfoWindow" + b + "' value='marker " + orderOfMarker + "' id='textInfoWindow" + b + "' /><input type='submit' name='button" + b + "' id='button" + b + "' value='OK' /><select id='markerColor" + b + "' name='markerColor'><option value='http://maps.google.com/mapfiles/ms/icons/purple-dot.png'>fialova</option><option value='http://maps.google.com/mapfiles/ms/icons/red-dot.png' selected='selected'>cervena</option><option value='http://maps.google.com/mapfiles/ms/icons/blue-dot.png'>modra</option><option value='http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'>zluta</option><option value='http://maps.google.com/mapfiles/ms/icons/green-dot.png'>zelena</option></select><input type='submit' name='buttonIcon" + b + "' id='buttonIcon" + b + "' value='Icon' /><br/>";
 
 //               
 //                // Insert a row in the table at the last row
@@ -165,13 +181,15 @@ $(document).ready(function() {
              
              var konec = $.Gmapy.createMarker({  
                 latitude: event.latLng.lat(),
-		longitude: event.latLng.lng()
+		longitude: event.latLng.lng(),
+                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
              }); 
              pointToItinerary();
              var start = new google.maps.LatLng(56.971927, 24.078027);
              var end = new google.maps.LatLng(57.707078, 37.635156);
              $.Gmapy.getDistance(start, end);
         }); 
+        
         
         $.Gmapy.createListener({type:'map'}, 'mousemove', function(point) {  
              gob('over').options[0].text = $.Gmapy.getCoordinatesLngLat(point);
@@ -302,7 +320,7 @@ $(document).ready(function() {
 	});
         $("#kmlBS").click(function() {
                 var kmlTextValue = document.getElementById("kmlAdress").value;
-		$.Gmapy.getKML(kmlTextValue);
+		$.Gmapy.kmlLayer(kmlTextValue);
 	});
         
         $("#createNewDay").click(function() {
@@ -533,7 +551,7 @@ $(document).ready(function() {
         <tr>
         <td>
         <ul class="menu">
-        <li><a href="../html/">Příklady</a>
+        <li><a href="">Příklady</a>
         <ul>
         <li><a href="newMap.html">mapa a marker</a></li>
         <li><a href="events.html">události</a></li>
@@ -541,13 +559,14 @@ $(document).ready(function() {
         <li><a href="geocode.html">geokodovani</a></li>
         <li><a href="polyline.html">křivka</a></li>
         <li><a href="polygon.html">polygon</a></li>
+        <li><a href="drawmanager.html">draw manager</a></li>
         </ul>
         </li>
         </ul>
         </td>
         <td>
         <ul class="menu">
-        <li><a href="../css/">Dokumentace</a>
+        <li><a href="">Dokumentace</a>
         <ul>
         <li><a href="out/index.html">v češtině</a></li>
 <!--        <li><a href="../css/margin/">v angličtině</a></li>-->
@@ -587,7 +606,7 @@ $(document).ready(function() {
         
         <div id="itineraryBoxHead">ITINERÁŘ
                 <input id="deleteMarkersButton" type="button" value="Smazat body">
-                <input id="createNewDay" type="button" value="Vytvořit den">
+                <input id="createNewDay" type="button" value="Vytvořit den" title="Vytvoří v itineráři den, ke kterému lze přiřadit místa návštěv">
         </div>
         <div id="itineraryBox">
 <!--            <table id="itineraryTable"></table>-->
@@ -604,8 +623,8 @@ $(document).ready(function() {
         <div id="saveBox">
 <!--            <input id = "fileupload" type = "file" />
             <input type = "submit" value = "Show KML" id = "kmlBS" />-->
-            <input type="text" name="kmlAdress" value="" id="kmlAdress" style="width: 150px"/>    
-            <input type="button" name="kmlBS" value="Zobraz KML" id="kmlBS" />
+            <input type="text" name="kmlAdress" value="" id="kmlAdress" title="Zadejte URL adresu kml souboru" style="width: 150px"/>    
+            <input type="button" name="kmlBS" value="Zobraz KML" id="kmlBS" title="Po zadání URL adresy kml souboru zobrazí data na mapě"/>
             
             <input type="file" name="kmlFile" id="kmlFile"/>
             <input type="button" name="kmlFileBtn" id="kmlFileBtn" value="Import KML" onclick="$.Gmapy.parseKML($('#kmlFile').val()); for (var u=0, l = $.Gmapy.markers.length; u < l; u++) {
@@ -628,6 +647,7 @@ $(document).ready(function() {
         </div>
         <div id="elevation_chart_last"></div>
         <div id="drawingPanel"> 
+            <button id="delete-button" onclick="$.Gmapy.deleteDrawingManagerShape()">Smazat všechny tvary</button>
             <input type="button" name="colorBtn" value="Nastavit křivku" id="setDirectBtn" onclick="$.Gmapy.clearRoutes(); $.Gmapy.displayRoute($($.Gmapy.mapId).data($.Gmapy.markers[0]).getPosition(), $($.Gmapy.mapId).data($.Gmapy.markers[$.Gmapy.markers.length-1]).getPosition(), 'driving', directionOptions());"/>
             <button type="submit" name="DrivingBtn" id="DrivingBtn" data-name="driving"><img src="img/car.png" alt="autem"/><br/></button>
             <button type="submit" name="WalkingBtn" id="WalkingBtn" data-name="walking" ><img src="img/walking.png" alt="pěšky"/><br/></button>
@@ -641,7 +661,7 @@ $(document).ready(function() {
                    <tr><td><div id="labelWeight">Tloušťka křivky </div></td><td><input type="text" name="weight" value="6" id="weightVal" /></td></tr>
 <!--                   <tr><td><div id="labelFColor">Barevná výplň: </div></td><td><input type="text" name="fillcolor" id="fillColor" /></td></tr>
                    <tr><td><div id="labelFOpacity">Opacita výplně: </div></td><td><input type="text" name="fillopacity" id="fillOpacity" /></td></tr>-->
-                   <tr><td><div id="labelStyleID">Style id: </div></td><td><input type="text" name="styleid" value="Cesta" id="styleID" /></td></tr>
+                   <tr><td><div id="labelStyleID">Style id: </div></td><td><input type="text" name="styleid" value="Cesta" id="styleID" title="Název cesty" /></td></tr>
                </table>
             </form>
 <!--            <div id="polygonsF">-->
@@ -658,6 +678,8 @@ $(document).ready(function() {
 		<input type="button" name="del1" value="remove polyline by id" id="del1" />
                   -->
                   
+        </div>
+        <div id="routeSteps">
         </div>
         <input type="button" id="generateKML" value="Generovat KML" onclick="logCoordinates()"/>
         <input style="width:150px" id="copySelectedBtn" type="button" onclick="selectTextarea();" value="Vyber text"/>
