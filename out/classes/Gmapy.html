@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Gmapy</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Gmapy.html">Gmapy</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>Gmapy Class</h1>
+<div class="box meta">
+
+
+        <div class="foundat">
+            Defined in: <a href="../files/gmapy.js.html#l28"><code>gmapy.js:28</code></a>
+        </div>
+
+
+</div>
+
+
+<div class="box intro">
+    <p>Vytvori novou instanci</p>
+
+</div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_addDrawingManager">addDrawingManager</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_clearMarkers">clearMarkers</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_clearRoutes">clearRoutes</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_createListener">createListener</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_createMarker">createMarker</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_displayElevate">displayElevate</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_displayRoute">displayRoute</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getAddress">getAddress</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getCoordinates">getCoordinates</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getDistance">getDistance</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getKML">getKML</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_initialize">initialize</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_removeListener">removeListener</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_removeMarker">removeMarker</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_setInfoWindow">setInfoWindow</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_setMap">setMap</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_addDrawingManager" class="method item">
+    <h3 class="name"><code>addDrawingManager</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>controlPosition</code>
+                </li>
+                <li class="arg">
+                        <code>defaultDrawMode</code>
+                </li>
+                <li class="arg">
+                        <code>showModes</code>
+                </li>
+                <li class="arg">
+                        <code>markerOpt</code>
+                </li>
+                <li class="arg">
+                        <code>circleOpt</code>
+                </li>
+                <li class="arg">
+                        <code>polygonOpt</code>
+                </li>
+                <li class="arg">
+                        <code>polylineOpt</code>
+                </li>
+                <li class="arg">
+                        <code>rectangleOpt</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l782"><code>gmapy.js:782</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Přidá drawing managera do mapy</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">controlPosition</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>pozice drawing managera v mapě, na výběr jsou (bottom-center, bottom-right,left-bottom, left-center, left-top, 
+                  right-bottom, right-center, right-top, left-center, top-center, top-left, top-right)</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">defaultDrawMode</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>typ vrstvy, která bude nastavena jako defaultní, na výběr jsou (marker, circle, polygon, polyline, rectangle)</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">showModes</code>
+                        <span class="type">Array</span>
+
+
+                    <div class="param-description">
+                        <p>do pole [..., ..., ...] se vloží všechny typy vrstev, které mají být zobrazeny v Drawing Manageru</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">markerOpt</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>objekt, který nese nastavení markeru</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">circleOpt</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>objekt, který nese nastavení kruhu</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">polygonOpt</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>objekt, který nese nastavení polygonu</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">polylineOpt</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>objekt, který nese nastavení křivky</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">rectangleOpt</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>objekt, který nese nastavení obdélníku</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_clearMarkers" class="method item">
+    <h3 class="name"><code>clearMarkers</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l1027"><code>gmapy.js:1027</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která odstrani vsechny markery</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_clearRoutes" class="method item">
+    <h3 class="name"><code>clearRoutes</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l422"><code>gmapy.js:422</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, ktera smaze trasu z mapy</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_createListener" class="method item">
+    <h3 class="name"><code>createListener</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>type</code>
+                </li>
+                <li class="arg">
+                        <code>event</code>
+                </li>
+                <li class="arg">
+                        <code>data</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l554"><code>gmapy.js:554</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která vytvori listener</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">type</code>
+                        <span class="type">Type</span>
+
+
+                    <div class="param-description">
+                        <p>typ objektu, na ktery plati udalost</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">event</code>
+                        <span class="type">Event</span>
+
+
+                    <div class="param-description">
+                        <p>druh udalosti</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">data</code>
+                        <span class="type">Data</span>
+
+
+                    <div class="param-description">
+                        <p>co se stane pri udalosti</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_createMarker" class="method item">
+    <h3 class="name"><code>createMarker</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>marker</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l904"><code>gmapy.js:904</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která vytvori marker</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">marker</code>
+                        <span class="type">Marker</span>
+
+
+                    <div class="param-description">
+                        <p>nastaveni parametru markeru</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_displayElevate" class="method item">
+    <h3 class="name"><code>displayElevate</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>path</code>
+                </li>
+                <li class="arg">
+                        <code>divDisplay</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l434"><code>gmapy.js:434</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která zobrazi vyskovy profil v grafu</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">path</code>
+                        <span class="type">Array</span>
+
+
+                    <div class="param-description">
+                        <p>pole bodů, jejichz spojovaci cesta je zanesena do grafu</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">divDisplay</code>
+                        <span class="type">Div</span>
+
+
+                    <div class="param-description">
+                        <p>div, kde se zobrazi graf</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_displayRoute" class="method item">
+    <h3 class="name"><code>displayRoute</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>travelMode</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l332"><code>gmapy.js:332</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, ktera zobrazi trasu mezi body na mape</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">travelMode</code>
+                        <span class="type">TravelMode</span>
+
+
+                    <div class="param-description">
+                        <p>Mod cesty pro vypocet trasy</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_getAddress" class="method item">
+    <h3 class="name"><code>getAddress</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>latLng</code>
+                </li>
+                <li class="arg">
+                        <code>summaryPanel</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l283"><code>gmapy.js:283</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která vrací adresu z latitude a longitude souřadnic</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">latLng</code>
+                        <span class="type">LatLng</span>
+
+
+                    <div class="param-description">
+                        <p>pocatecni bod</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">summaryPanel</code>
+                        <span class="type">Div</span>
+
+
+                    <div class="param-description">
+                        <p>misto, kde bude adresa zobrazena</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_getCoordinates" class="method item">
+    <h3 class="name"><code>getCoordinates</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>point</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l223"><code>gmapy.js:223</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, ktera vrati longitude a latitude souradnice oddelene carkou</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">point</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>bod na mape</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">String</span>:
+                    <p>LnglatStr6  vraci longitude a latitude souradnice oddelene carkou</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_getDistance" class="method item">
+    <h3 class="name"><code>getDistance</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>p1</code>
+                </li>
+                <li class="arg">
+                        <code>p2</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l306"><code>gmapy.js:306</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která vrací vzdálenost mezi dvěma body v metrech</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">p1</code>
+                        <span class="type">LatLng</span>
+
+
+                    <div class="param-description">
+                        <p>počáteční bod</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">p2</code>
+                        <span class="type">LatLng</span>
+
+
+                    <div class="param-description">
+                        <p>koncový bod</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_getKML" class="method item">
+    <h3 class="name"><code>getKML</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>kmladress</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l255"><code>gmapy.js:255</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která ze zvolené adresy URL zobrazí kml na mapě</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">kmladress</code>
+                        <span class="type">Url</span>
+
+
+                    <div class="param-description">
+                        <p>URL adresa kml souboru</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_initialize" class="method item">
+    <h3 class="name"><code>initialize</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>path</code>
+                </li>
+                <li class="arg">
+                        <code>divDisplay</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l446"><code>gmapy.js:446</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která zobrazi vyskovy profil v grafu</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">path</code>
+                        <span class="type">Array</span>
+
+
+                    <div class="param-description">
+                        <p>pole bodů, jejichz spojovaci cesta je zanesena do grafu</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">divDisplay</code>
+                        <span class="type">Div</span>
+
+
+                    <div class="param-description">
+                        <p>div, kde se zobrazi graf</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_removeListener" class="method item">
+    <h3 class="name"><code>removeListener</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l580"><code>gmapy.js:580</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která vyjme listener</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_removeMarker" class="method item">
+    <h3 class="name"><code>removeMarker</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>marker</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l1001"><code>gmapy.js:1001</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která vyjme marker</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">marker</code>
+                        <span class="type">Marker</span>
+
+
+                    <div class="param-description">
+                        <p>marker, ktery ma byt vyjmut</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_setInfoWindow" class="method item">
+    <h3 class="name"><code>setInfoWindow</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>tmarker</code>
+                </li>
+                <li class="arg">
+                        <code>html</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l588"><code>gmapy.js:588</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která nastavi info window</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">tmarker</code>
+                        <span class="type">Marker</span>
+
+
+                    <div class="param-description">
+                        <p>marker, na ktery ma byt vytvoreno info window</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">html</code>
+                        <span class="type">Options</span>
+
+
+                    <div class="param-description">
+                        <p>nastaveni parametru info window</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_setMap" class="method item">
+    <h3 class="name"><code>setMap</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>options</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/gmapy.js.html#l524"><code>gmapy.js:524</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Funkce, která nastaví mapu</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">options</code>
+                        <span class="type">Options</span>
+
+
+                    <div class="param-description">
+                        <p>nastaveni parametru mapy</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+            </div>
+
+
+
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
