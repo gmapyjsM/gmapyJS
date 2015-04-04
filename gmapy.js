@@ -2,10 +2,19 @@
     var directionsDisplay;
     var directionsService;
     var chart;
+    var mousemarker = null;
     var travelingMod;
     var indexOfLeg =0;
+    var elevator = null;
     var elevations = null;
     var openedInfoWindow = null;
+    var drawingManager;
+    var all_overlays = [];
+var selectedShape;
+var colors = ['#1E90FF', '#FF1493', '#32CD32', '#FF8C00', '#4B0082'];
+var selectedColor;
+var colorButtons = {};
+
     var geocoder = new google.maps.Geocoder();
     function MyOverlay(map) {
         this.setMap(map);
@@ -248,9 +257,9 @@
         /**
          * Funkce, která ze zvolené adresy URL zobrazí kml na mapě
          * @method getKML
-         * @param kmladress {url} URL adresa kml souboru
+         * @param kmladress {String} URL adresa kml souboru
         */
-        getKML: function(kmladress) {
+        kmlLayer: function(kmladress) {
             var kmlLayer = new google.maps.KmlLayer({
                 url: kmladress, 
                 map: this.map
@@ -362,16 +371,38 @@
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(request);
                     var route = request.routes[0];
-                    var routeInfo = document.getElementById("wholeRouteInfo");
+                    var routeInfo = document.getElementById("routeSteps");
+                    var ul=document.createElement('ulRoute');
+                    var li=document.createElement('liRoute');
+                    routeInfo.appendChild(ul);
+                    ul.appendChild(li);
                     
-                    routeInfo.innerHTML = "";
-                    routeInfo.innerHTML = "<b>Z: </b>" + route.legs[indexOfLeg].start_address + " <br /> ";
-                    routeInfo.innerHTML += "<b>Do: </b>" + route.legs[indexOfLeg].end_address + " <br /> ";
-                    routeInfo.innerHTML += "<b>Vzdálenost: </b>" + route.legs[indexOfLeg].distance.text + " <br /> ";
+                    li.innerHTML = "";
+                    li.innerHTML = "<b>Z: </b>" + route.legs[indexOfLeg].start_address + " <br /> ";
+                    li.innerHTML += "<b>Do: </b>" + route.legs[indexOfLeg].end_address + " <br /> ";
+                    li.innerHTML += "<b>Doba: </b>" + route.legs[indexOfLeg].duration.text + "<br />";
+                    li.innerHTML += "<b>Vzdálenost: </b>" + route.legs[indexOfLeg].distance.text + " <br /> <br /> ";
+                    computeTotalDistance(request);
                     indexOfLeg++;
                 }
             });
             //}
+            function computeTotalDistance(result) {
+                var totalDist = 0;
+                var totalTime = 0;
+                var myroute = result.routes[0];
+                for (var i = 0; i < myroute.legs.length; i++) {
+                  totalDist += myroute.legs[i].distance.value;
+                  totalTime += myroute.legs[i].duration.value;      
+                }
+                totalDist = totalDist / 1000;
+                var routeInfo2 = document.getElementById("wholeRouteInfo");
+                    routeInfo2.innerHTML = "";
+                    routeInfo2.innerHTML = "<b>Z: </b>" + myroute.legs[0].start_address + " <br /> ";
+                    routeInfo2.innerHTML += "<b>Do: </b>" + myroute.legs[indexOfLeg].end_address + " <br /> ";
+                    routeInfo2.innerHTML += "<b>Doba: </b>" + (totalTime / 60).toFixed() + " minut<br />";
+                    routeInfo2.innerHTML += "<b>Vzdálenost: </b>" + totalDist + " km <br /> <br /> ";
+            }
             
         },
         travelModeChange: function(travelMode){
@@ -435,7 +466,7 @@
             google.load('visualization', '1', {packages: ['columnchart']});
             google.maps.event.addDomListener(window, 'load', initialize(path,divDisplay));
             google.setOnLoadCallback(initialize);
-
+            
        /**
          * Funkce, která zobrazi vyskovy profil v grafu
          * @method initialize
@@ -443,7 +474,6 @@
          * @param divDisplay {div} div, kde se zobrazi graf
         */
             function initialize(path,divDisplay) {
-                var elevator;
 
                 elevator = new google.maps.ElevationService();
                 chart = new google.visualization.ColumnChart(document.getElementById(divDisplay));
@@ -452,9 +482,27 @@
                     'samples': 160
                 };
                 
+                google.visualization.events.addListener(chart, 'onmouseover', function(e) {
+      if (mousemarker == null) {
+        mousemarker = new google.maps.Marker({
+          position: elevations[e.row].location,
+          map: this.map,
+          icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+        });
+        var contentStr = "elevation="+elevations[e.row].elevation+"<br>location="+elevations[e.row].location.toUrlValue(6);
+
+      } else {
+        var contentStr = "elevation="+elevations[e.row].elevation+"<br>location="+elevations[e.row].location.toUrlValue(6);
+        mousemarker.setPosition(elevations[e.row].location);
+        // if (mm_infowindow_open) infowindow.open(map,mousemarker);
+      }
+    });
                 elevator.getElevationAlongPath(pathRequest, plotElevation);
             }
-
+            function drawPath(path){
+                
+            }
+            
             function plotElevation(results) {
                 elevations = results;
 
@@ -475,8 +523,9 @@
                     legend: ' zadna / none',
                     titleY: 'Elevace / Elevation (m)'
                 };
-                chart.draw(data, drawChart);  
-            }    
+                chart.draw(data, drawChart);    
+            } 
+            
         },
         geocode: function(address, options) {
             var Gmapy = this;
@@ -772,6 +821,101 @@
             }
             this[this.overlays[type].array] = [];
         },
+        /**
+         * Přidá drawing managera do mapy
+         * @method addDrawingManager
+         * @param {String} controlPosition  pozice drawing managera v mapě, na výběr jsou (bottom-center, bottom-right,left-bottom, left-center, left-top, 
+                   right-bottom, right-center, right-top, left-center, top-center, top-left, top-right)
+         * @param {String} defaultDrawMode  typ vrstvy, která bude nastavena jako defaultní, na výběr jsou (marker, circle, polygon, polyline, rectangle)
+         * @param {Array} showModes  do pole [..., ..., ...] se vloží všechny typy vrstev, které mají být zobrazeny v Drawing Manageru
+         * @param {Object} markerOpt  objekt, který nese nastavení markeru
+         * @param {Object} circleOpt  objekt, který nese nastavení kruhu
+         * @param {Object} polygonOpt  objekt, který nese nastavení polygonu
+         * @param {Object} polylineOpt  objekt, který nese nastavení křivky
+         * @param {Object} rectangleOpt  objekt, který nese nastavení obdélníku
+         */
+        addDrawingManager: function(controlPosition, defaultDrawMode, showModes, markerOpt, circleOpt, polygonOpt, polylineOpt, rectangleOpt) {
+            var defDrawMode;
+            var cntrlPosition;
+            
+            
+            switch(defaultDrawMode) {
+                case 'marker': defDrawMode = google.maps.drawing.OverlayType.MARKER; break;
+                case 'circle': defDrawMode = google.maps.drawing.OverlayType.CIRCLE; break;
+                case 'polygon': defDrawMode = google.maps.drawing.OverlayType.POLYGON; break;
+                case 'polyline' : defDrawMode = google.maps.drawing.OverlayType.POLYLINE; break;
+                case 'rectangle' : defDrawMode = google.maps.drawing.OverlayType.RECTANGLE; break;
+                default : defDrawMode = google.maps.drawing.OverlayType.MARKER;
+            }
+            switch(controlPosition) {
+                case 'bottom-center': cntrlPosition = google.maps.ControlPosition.BOTTOM_CENTER; break;
+                case 'bottom-left': cntrlPosition = google.maps.ControlPosition.BOTTOM_LEFT; break;
+                case 'bottom-right': cntrlPosition = google.maps.ControlPosition.BOTTOM_RIGHT; break;
+                case 'left-bottom' : cntrlPosition = google.maps.ControlPosition.LEFT_BOTTOM; break;
+                case 'left-center' : cntrlPosition = google.maps.ControlPosition.LEFT_CENTER; break;
+                case 'left-top': cntrlPosition = google.maps.ControlPosition.LEFT_TOP; break;
+                case 'right-bottom': cntrlPosition = google.maps.ControlPosition.RIGHT_BOTTOM; break;
+                case 'right-center': cntrlPosition = google.maps.ControlPosition.RIGHT_CENTER; break;
+                case 'right-top' : cntrlPosition = google.maps.ControlPosition.RIGHT_TOP; break;
+                case 'left-center' : cntrlPosition = google.maps.ControlPosition.LEFT_CENTER; break;
+                case 'top-center': cntrlPosition = google.maps.ControlPosition.TOP_CENTER; break;
+                case 'top-left' : cntrlPosition = google.maps.ControlPosition.TOP_LEFT; break;
+                case 'top-right' : cntrlPosition = google.maps.ControlPosition.TOP_RIGHT; break;
+                default : cntrlPosition = google.maps.ControlPosition.TOP_CENTER;
+            }
+            drawingManager = new google.maps.drawing.DrawingManager({
+                drawingMode: defDrawMode,
+                drawingControl: true,
+                drawingControlOptions: {
+                    position: cntrlPosition,
+                    drawingModes: showModes
+                },
+                markerOptions: markerOpt,
+                circleOptions: circleOpt,
+                polygonOptions: polygonOpt,
+                polylineOptions: polylineOpt,
+                rectangleOptions: rectangleOpt
+                
+            });
+            google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
+                all_overlays.push(e);
+            });
+            drawingManager.setMap(this.map); 
+        },
+        /**
+         * Funkce skryje Drawing Manager
+         *
+         */
+        hideDrawingManager: function() {
+            drawingManager.setOptions({
+                drawingControl: false
+            });
+        },
+        /**
+         * Funkce zobrazí Drawing Manager
+         * 
+         */
+        showDrawingManager: function() {
+            drawingManager.setOptions({
+                drawingControl: true
+            });
+        },
+        /**
+         * Funkce vymaže všechny tvary z mapy nakreslené Drawing Managerem
+         *
+         */
+        deleteDrawingManagerShape: function() {
+           for (var i=0; i < all_overlays.length; i++){
+                all_overlays[i].overlay.setMap(null);
+            }
+            all_overlays = [];    
+        },
+        /**
+         * Funkce ukáže nebo schová marker
+         * @param {Object} marker  marker, který má být ukázán nebo skryt
+         * @param {Boolean} display  nastaví zda bude marker zobrazen nebo skryt
+         * @return {undefined}
+         */
         showHideMarker: function(marker, display) {
             if (typeof display === 'undefined') {
                 if (this.getVisibleMarker(marker)) {
@@ -788,6 +932,10 @@
             else
                 $(this.mapId).data(marker).setVisible(display);
         },
+        /**
+         * Funkce, která vrací počet markerů na mapě
+         * @return {int} Vrátí počet markerů v mapě
+         */
         getMarkerCount: function() {
             return this.markers.length;
         },
