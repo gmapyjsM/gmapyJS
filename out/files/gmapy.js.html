@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>gmapy.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Gmapy.html">Gmapy</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: gmapy.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+(function($) {
+    var directionsDisplay;
+    var directionsService;
+    var chart;
+    var travelingMod;
+    var indexOfLeg =0;
+    var elevations = null;
+    var openedInfoWindow = null;
+    var drawingManager;
+    var all_overlays = [];
+var selectedShape;
+var colors = [&#x27;#1E90FF&#x27;, &#x27;#FF1493&#x27;, &#x27;#32CD32&#x27;, &#x27;#FF8C00&#x27;, &#x27;#4B0082&#x27;];
+var selectedColor;
+var colorButtons = {};
+
+    var geocoder = new google.maps.Geocoder();
+    function MyOverlay(map) {
+        this.setMap(map);
+    };
+    MyOverlay.prototype = new google.maps.OverlayView();
+    MyOverlay.prototype.onAdd = function() {
+    };
+    MyOverlay.prototype.onRemove = function() {
+    };
+    MyOverlay.prototype.draw = function() {
+    };
+    
+    /**
+        * Vytvori novou instanci
+        * @class Gmapy  
+    */
+    $.Gmapy = {};
+    $.fn.Gmapy = function(options) {
+        return this.each(function() {
+            var Gmapy = $(this).data(&#x27;Gmapy&#x27;);
+            if (!Gmapy) {
+                var GmapyBase = $.extend(true, {}, $.GmapyBase);
+                $(this).data(&#x27;Gmapy&#x27;, GmapyBase.init(this, options));
+                $.Gmapy = GmapyBase;
+            }
+            else {
+                $.Gmapy = Gmapy;
+            }
+        });
+    };
+    
+        
+    $.GmapyBase = {
+        defaults: {
+            address: &#x27;&#x27;,
+            latitude: 49.817491999999990000,
+            longitude: 15.472962000000052000,
+            zoom: 7,
+            delay: 200,
+            hideByClick: false,
+            oneInfoWindow: false,
+            prefixId: &#x27;gmarker&#x27;,
+            polyId: &#x27;gpoly&#x27;,
+            groupId: &#x27;ggroup&#x27;,
+            navigationControl: true,
+            navigationControlOptions: {
+                position: &#x27;TOP_LEFT&#x27;,
+                style: &#x27;DEFAULT&#x27;
+            },
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+                position: &#x27;TOP_RIGHT&#x27;,
+                style: &#x27;DEFAULT&#x27;
+            },
+            scaleControl: false,
+            scrollwheel: true,
+            directions: false,
+            directionsResult: null,
+            disableDoubleClickZoom: false,
+            streetViewControl: false,
+            markers: [],
+            overlays: [],
+            polyline: {
+                color: &#x27;#FF0000&#x27;,
+                opacity: 1.0,
+                weight: 2
+            },
+            polygon: {
+                color: &#x27;#FF0000&#x27;,
+                opacity: 1.0,
+                weight: 2,
+                fillColor: &#x27;#FF0000&#x27;,
+                fillOpacity: 0.2
+            },
+            circle: {
+                color: &#x27;#FF0000&#x27;,
+                opacity: 1.0,
+                weight: 2,
+                fillColor: &#x27;#FF0000&#x27;,
+                fillOpacity: 0.2
+            },
+            rectangle: {
+                color: &#x27;#FF0000&#x27;,
+                opacity: 1.0,
+                weight: 2,
+                fillColor: &#x27;#FF0000&#x27;,
+                fillOpacity: 0.2
+            },
+            maptype: &#x27;HYBRID&#x27;, 
+            html_prepend: &#x27;&lt;div class=gmapyMarker&gt;&#x27;,
+            html_append: &#x27;&lt;/div&gt;&#x27;,
+            addMarker: false
+        },
+        map: null,
+        count: 0,
+        directionsArray: [],
+        infoWindowsArray: [],
+        markers: [],
+        polylines: [],
+        polygons: [],
+        circles: [],
+        rectangles: [],
+        tmpMarkers: [],
+        geoMarkers: [],
+        lockGeocode: false,
+        bounds: null,
+        overlays: null,
+        overlay: null,
+        mapId: null,
+        plId: null,
+        pgId: null,
+        cId: null,
+        rId: null,
+        opts: null,
+        centerLatLng: null,
+    
+        init: function(el, options) {
+            var opts = $.extend(true, {}, $.GmapyBase.defaults, options);
+            this.mapId = $(el);
+            this.opts = opts;
+            if (opts.address)
+                this.geocode({address: opts.address, center: true});
+            else if ($.isArray(opts.markers) &amp;&amp; opts.markers.length &gt; 0) {
+                if (opts.markers[0].address)
+                    this.geocode({address: opts.markers[0].address, center: true});
+                else
+                    this.centerLatLng = new google.maps.LatLng(opts.markers[0].latitude, opts.markers[0].longitude);
+            }
+            else
+                this.centerLatLng = new google.maps.LatLng(opts.latitude, opts.longitude);
+            var myOptions = {
+                center: this.centerLatLng,
+                disableDoubleClickZoom: opts.disableDoubleClickZoom,
+                mapTypeControl: opts.mapTypeControl,
+                streetViewControl: opts.streetViewControl,
+                mapTypeControlOptions: {
+                    position: google.maps.ControlPosition[opts.mapTypeControlOptions.position.toUpperCase()],
+                    style: google.maps.MapTypeControlStyle[opts.mapTypeControlOptions.style.toUpperCase()]
+                },
+                mapTypeId: google.maps.MapTypeId[opts.maptype.toUpperCase()],
+                navigationControl: opts.navigationControl,
+                navigationControlOptions: {
+                    position: google.maps.ControlPosition[opts.navigationControlOptions.position.toUpperCase()],
+                    style: google.maps.NavigationControlStyle[opts.navigationControlOptions.style.toUpperCase()]
+                },
+                scaleControl: opts.scaleControl,
+                scrollwheel: opts.scrollwheel,
+                zoom: opts.zoom
+            };
+            this.map = new google.maps.Map(el, myOptions);
+            this.overlay = new MyOverlay(this.map);
+            this.overlays = {
+                polyline: {id: &#x27;plId&#x27;, array: &#x27;polylines&#x27;, create: &#x27;createPolyline&#x27;},
+                polygon: {id: &#x27;pgId&#x27;, array: &#x27;polygons&#x27;, create: &#x27;createPolygon&#x27;},
+                circle: {id: &#x27;cId&#x27;, array: &#x27;circles&#x27;, create: &#x27;createCircle&#x27;},
+                rectangle: {id: &#x27;rId&#x27;, array: &#x27;rectangles&#x27;, create: &#x27;createRectangle&#x27;}
+            };
+            this.plId = $(&#x27;&lt;div style=&quot;display:none;&quot;/&gt;&#x27;).appendTo(this.mapId);
+            this.pgId = $(&#x27;&lt;div style=&quot;display:none;&quot;/&gt;&#x27;).appendTo(this.mapId);
+            this.cId = $(&#x27;&lt;div style=&quot;display:none;&quot;/&gt;&#x27;).appendTo(this.mapId);
+            this.rId = $(&#x27;&lt;div style=&quot;display:none;&quot;/&gt;&#x27;).appendTo(this.mapId);
+            for (var j = 0, l = opts.markers.length; j &lt; l; j++)
+                this.createMarker(opts.markers[j]);
+            for (var j = 0, l = opts.overlays.length; j &lt; l; j++)
+                this[this.overlays[opts.overlays[j].type].create](opts.overlays[j]);
+            var Gmapy = this;
+            if (opts.addMarker == true || opts.addMarker == &#x27;multi&#x27;) {
+                google.maps.event.addListener(Gmapy.map, &#x27;click&#x27;, function(event) {
+                    var options = {
+                        position: event.latLng,
+                        draggable: true
+                    };
+                    var marker = Gmapy.createMarker(options);
+                    google.maps.event.addListener(marker, &#x27;dblclick&#x27;, function(event) {
+                        marker.setMap(null);
+                        Gmapy.removeMarker(marker.id);
+                    });
+                });
+            }
+            else if (opts.addMarker == &#x27;single&#x27;) {
+                google.maps.event.addListener(Gmapy.map, &#x27;click&#x27;, function(event) {
+                    if (!Gmapy.singleMarker) {
+                        var options = {
+                            position: event.latLng,
+                            draggable: true
+                        };
+                        var marker = Gmapy.createMarker(options);
+                        Gmapy.singleMarker = true;
+                        google.maps.event.addListener(marker, &#x27;dblclick&#x27;, function(event) {
+                            marker.setMap(null);
+                            Gmapy.removeMarker(marker.id);
+                            Gmapy.singleMarker = false;
+                        });
+                    }
+                });
+            }
+            delete opts.markers;
+            delete opts.overlays;
+            return this;
+        },
+        ready: function(f) {
+            google.maps.event.addListenerOnce(this.map, &#x27;bounds_changed&#x27;, function() {
+                return f();
+            });
+        },
+        
+        
+        /**
+         * Funkce, ktera vrati longitude a latitude souradnice oddelene carkou
+         * @method getCoordinates
+         * @param point {object} bod na mape
+         * @return LnglatStr6 {String} vraci longitude a latitude souradnice oddelene carkou
+        */
+        getCoordinatesLngLat: function(point){
+            var LnglatStr6 = point.latLng.lng().toFixed(6) + &#x27;, &#x27; + point.latLng.lat().toFixed(6);
+            return LnglatStr6;
+        },
+        getCoordinatesLatLng: function(point){
+            var LnglatStr6 = point.latLng.lat().toFixed(6) + &#x27;, &#x27; + point.latLng.lng().toFixed(6);
+            return LnglatStr6;
+        },
+        /*
+         * Funkce vrati souradnice v opacnem poradi longitude, latitude
+         * @param {type} indexOfMarker
+         * @return {unresolved}
+         */
+        getMarkerCoordinatesLngLat: function(indexOfMarker){
+            var markerInArray = $(this.mapId).data(this.markers[indexOfMarker]);
+            var markercoordLat = markerInArray.getPosition().lat();
+            var markercoordLng = markerInArray.getPosition().lng();
+            var markercoord = markercoordLng + &#x27;, &#x27; + markercoordLat;
+            return markercoord;
+        },
+        getMarkerCoordinatesLatLng: function(indexOfMarker){
+            var markerInArray = $(this.mapId).data(this.markers[indexOfMarker]);
+            var markercoord = markerInArray.position.toUrlValue();
+            return markercoord;
+        },
+        
+        /**
+         * Funkce, která ze zvolené adresy URL zobrazí kml na mapě
+         * @method getKML
+         * @param kmladress {url} URL adresa kml souboru
+        */
+        getKML: function(kmladress) {
+            var kmlLayer = new google.maps.KmlLayer({
+                url: kmladress, 
+                map: this.map
+            });
+
+        },
+        parseKML: function(kmlfile) {
+            var geoXml = new geoXML3.parser({map: this.map, singleInfoWindow: true});
+            geoXml.parse(kmlfile); 
+            this.markers.push(geoXml.docs[0].placemarks[0].marker);
+            
+//            function getCoordKml(placemark){
+//                //var coord = new google.maps.LatLng(placemark.Point.coordinates[0].lat, placemark.Point.coordinates[0].lng);
+////                var coordLat = placemark.Point.coordinates[0].lat;
+////                var coordLng = placemark.Point.coordinates[0].lng;
+//                var coordLat = placemark.name;
+//                
+//                var cor = document.getElementById(&quot;saveBox&quot;);
+//                cor.innerHTML= coordLat;
+//            }
+        },
+        
+        /**
+         * Funkce, která vrací adresu z latitude a longitude souřadnic
+         * @method getAddress
+         * @param latLng {latLng} pocatecni bod
+         * @param summaryPanel {div} misto, kde bude adresa zobrazena
+        */
+        getAddress: function(latLng,summaryPanel){
+            geocoder.geocode( {&#x27;latLng&#x27;: latLng},
+            function(results, status) {
+                if(status == google.maps.GeocoderStatus.OK) {
+                    if(results[0]) {
+                        summaryPanel.innerHTML = results[0].formatted_address;
+                    }
+                    else {
+                        summaryPanel.innerHTML = &quot;No results&quot;;
+                    }
+                }
+                else {
+                    summaryPanel.innerHTML = status;
+                }
+            });
+        },        
+        
+        /**
+         * Funkce, která vrací vzdálenost mezi dvěma body v metrech
+         * @method getDistance
+         * @param p1 {latLng} počáteční bod
+         * @param p2 {latLng} koncový bod
+        */
+        getDistance: function(p1, p2) {
+          
+          function rad(x) {
+              return x * Math.PI / 180;
+          }
+            var list = document.getElementById(&#x27;dist&#x27;);
+            var R = 6378137; // Earth’s mean radius in meter
+            var dLat = rad(p2.lat() - p1.lat());
+            var dLong = rad(p2.lng() - p1.lng());
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
+            Math.sin(dLong / 2) * Math.sin(dLong / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = R * c;
+            var entry = document.createElement(&#x27;li&#x27;);
+            entry.appendChild(document.createTextNode(&#x27;Vzdálenost &#x27; + d));
+            list.appendChild(entry);
+         //return d; // returns the distance in meter
+        },
+        
+        /**
+         * Funkce, ktera zobrazi trasu mezi body na mape
+         * @method displayRoute
+         * @param travelMode {travelMode} Mod cesty pro vypocet trasy
+        */
+        displayRoute: function(origin, destination, travelMode, routeOptions) {
+            var routeTravelMode;
+            directionsService = new google.maps.DirectionsService();
+            directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true, polylineOptions: routeOptions });
+            directionsDisplay.setMap(this.map);
+            $(this.mapId).data(directionsDisplay.id, directionsDisplay);
+            this.directionsArray.push(directionsDisplay);
+            var start = origin;
+            var end = destination;
+            var waypoints = [];
+            for (var i = 1; i &lt; this.markers.length - 1; i++) { 
+                waypoints.push({
+                    location: $(this.mapId).data(this.markers[i]).getPosition(),
+                    stopover: true
+                });
+            }
+            
+            switch(travelMode) {
+                case &#x27;driving&#x27;: routeTravelMode = google.maps.TravelMode.DRIVING; break;
+                case &#x27;walking&#x27;: routeTravelMode = google.maps.TravelMode.WALKING; break;
+                case &#x27;bicycling&#x27;: routeTravelMode = google.maps.TravelMode.BICYCLING; break;
+                case &#x27;transit&#x27; : routeTravelMode = google.maps.TravelMode.TRANSIT; break;
+                default : routeTravelMode = google.maps.TravelMode.DRIVING;
+            }
+
+            var request = {
+              origin : start,
+              destination : end,
+              waypoints: waypoints,
+              travelMode : routeTravelMode
+            };
+            directionsService.route(request, function(request, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(request);
+                    var route = request.routes[0];
+                    var routeInfo = document.getElementById(&quot;wholeRouteInfo&quot;);
+                    
+                    routeInfo.innerHTML = &quot;&quot;;
+                    routeInfo.innerHTML = &quot;&lt;b&gt;Z: &lt;/b&gt;&quot; + route.legs[indexOfLeg].start_address + &quot; &lt;br /&gt; &quot;;
+                    routeInfo.innerHTML += &quot;&lt;b&gt;Do: &lt;/b&gt;&quot; + route.legs[indexOfLeg].end_address + &quot; &lt;br /&gt; &quot;;
+                    routeInfo.innerHTML += &quot;&lt;b&gt;Vzdálenost: &lt;/b&gt;&quot; + route.legs[indexOfLeg].distance.text + &quot; &lt;br /&gt; &quot;;
+                    indexOfLeg++;
+                }
+            });
+            //}
+            
+        },
+        travelModeChange: function(travelMode){
+            switch(travelMode) {
+                case &#x27;driving&#x27;: travelingMod = google.maps.TravelMode.DRIVING; break;
+                case &#x27;walking&#x27;: travelingMod = google.maps.TravelMode.WALKING; break;
+                case &#x27;bicycling&#x27;: travelingMod = google.maps.TravelMode.BICYCLING; break;
+                case &#x27;transit&#x27; : travelingMod = google.maps.TravelMode.TRANSIT; break;
+                default : travelingMod = google.maps.TravelMode.DRIVING;
+            }
+        },
+        
+        lengthOfRouteArray: function(indexOfRoute){
+            var routeCoordinates = this.directionsArray[indexOfRoute].getDirections().routes[0].overview_path;
+            return routeCoordinates.length;
+        },
+        getRouteCoordinatesLatLng: function(indexOfRoute){
+            var routeCoordinates = this.directionsArray[indexOfRoute].getDirections().routes[0].overview_path;
+            return routeCoordinates;
+        },
+        getRouteCoordinatesLngLat: function(indexOfRouteStep){
+            var directionPoint = directionsDisplay.getDirections().routes[0].overview_path;
+            var routeLat = directionPoint[indexOfRouteStep].lat();
+            var routeLng = directionPoint[indexOfRouteStep].lng();
+            var routercoord = routeLng + &#x27;, &#x27; + routeLat;
+            return routercoord;
+        },
+        getRouteStartAddress: function(indexOfRoute){
+            var startaddress = directionsDisplay.getDirections().routes[0].legs[indexOfRoute].start_address;
+            return startaddress;
+        },
+        getRouteEndAddress: function(indexOfRoute){
+            var endaddress = directionsDisplay.getDirections().routes[0].legs[indexOfRoute].end_address;
+            return endaddress;
+        },
+        getRouteDistanceKM: function(indexOfRoute){
+            var routedistanceKM = directionsDisplay.getDirections().routes[0].legs[indexOfRoute].distance.text;
+            return routedistanceKM;
+        },
+        
+        /**
+         * Funkce, ktera smaze trasu z mapy
+         * @method clearRoutes
+        */
+        clearRoutes: function(){
+            for(var i=0; i&lt;this.directionsArray.length; i+=1){
+                this.directionsArray[i].setMap(null);
+                this.directionsArray.splice(i, 1);
+            }
+            //directionsArray = [];
+        },
+        
+        /**
+         * Funkce, která zobrazi vyskovy profil v grafu
+         * @method displayElevate
+         * @param path {array} pole bodů, jejichz spojovaci cesta je zanesena do grafu
+         * @param divDisplay {div} div, kde se zobrazi graf
+        */
+        displayElevate: function(path, divDisplay) {
+            
+            google.load(&#x27;visualization&#x27;, &#x27;1&#x27;, {packages: [&#x27;columnchart&#x27;]});
+            google.maps.event.addDomListener(window, &#x27;load&#x27;, initialize(path,divDisplay));
+            google.setOnLoadCallback(initialize);
+
+       /**
+         * Funkce, která zobrazi vyskovy profil v grafu
+         * @method initialize
+         * @param path {array} pole bodů, jejichz spojovaci cesta je zanesena do grafu
+         * @param divDisplay {div} div, kde se zobrazi graf
+        */
+            function initialize(path,divDisplay) {
+                var elevator;
+
+                elevator = new google.maps.ElevationService();
+                chart = new google.visualization.ColumnChart(document.getElementById(divDisplay));
+                var pathRequest = {
+                    &#x27;path&#x27;: path,
+                    &#x27;samples&#x27;: 160
+                };
+                
+                elevator.getElevationAlongPath(pathRequest, plotElevation);
+            }
+
+            function plotElevation(results) {
+                elevations = results;
+
+                var elevationPath = [];
+                for (var i = 0; i &lt; results.length; i++) {
+                    elevationPath.push(elevations[i].location);
+                }
+
+                var data = new google.visualization.DataTable();
+                data.addColumn(&#x27;string&#x27;, &#x27;Vzorek&#x27;);
+                data.addColumn(&#x27;number&#x27;, &#x27;Vyskovy profil&#x27;);
+                for (var i = 0; i &lt; results.length; i++) {
+                    data.addRow([&#x27;&#x27;, elevations[i].elevation]);
+                }
+
+                var drawChart = {
+                    height: 150,
+                    legend: &#x27; zadna / none&#x27;,
+                    titleY: &#x27;Elevace / Elevation (m)&#x27;
+                };
+                chart.draw(data, drawChart);  
+            }    
+        },
+        geocode: function(address, options) {
+            var Gmapy = this;
+            setTimeout(function() {
+                geocoder.geocode({&#x27;address&#x27;: address.address}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK &amp;&amp; address.center)
+                        Gmapy.map.setCenter(results[0].geometry.location);
+                    if (status == google.maps.GeocoderStatus.OK &amp;&amp; options &amp;&amp; options.markerId)
+                        options.markerId.setPosition(results[0].geometry.location);
+                    else if (status == google.maps.GeocoderStatus.OK &amp;&amp; options) {
+                        if (Gmapy.lockGeocode) {
+                            Gmapy.lockGeocode = false;
+                            options.position = results[0].geometry.location;
+                            options.geocode = true;
+                            Gmapy.createMarker(options);
+                        }
+                    }
+                    else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+                        Gmapy.geocode(address, options);
+                    }
+                });
+            }, this.opts.delay);
+        },
+        geoMarker: function() {
+            if (this.geoMarkers.length &gt; 0 &amp;&amp; !this.lockGeocode) {
+                this.lockGeocode = true;
+                var current = this.geoMarkers.splice(0, 1);
+                this.geocode({address: current[0].address}, current[0]);
+            }
+            else if (this.lockGeocode) {
+                var Gmapy = this;
+                setTimeout(function() {
+                    Gmapy.geoMarker();
+                }, this.opts.delay);
+            }
+        },
+        
+        /**
+         * Funkce, která nastaví mapu
+         * @method setMap
+         * @param options {options} nastaveni parametru mapy
+        */
+        setMap: function(options) {
+            delete options.mapTypeId;
+            if (options.address) {
+                this.geocode({address: options.address, center: true});
+                delete options.address;
+            }
+            else if (options.latitude &amp;&amp; options.longitude) {
+                options.center = new google.maps.LatLng(options.latitude, options.longitude);
+                delete options.longitude;
+                delete options.latitude;
+            }
+            if (options.mapTypeControlOptions &amp;&amp; options.mapTypeControlOptions.position)
+                options.mapTypeControlOptions.position = google.maps.ControlPosition[options.mapTypeControlOptions.position.toUpperCase()];
+            if (options.mapTypeControlOptions &amp;&amp; options.mapTypeControlOptions.style)
+                options.mapTypeControlOptions.style = google.maps.MapTypeControlStyle[options.mapTypeControlOptions.style.toUpperCase()];
+            if (options.navigationControlOptions &amp;&amp; options.navigationControlOptions.position)
+                options.navigationControlOptions.position = google.maps.ControlPosition[options.navigationControlOptions.position.toUpperCase()];
+            if (options.navigationControlOptions &amp;&amp; options.navigationControlOptions.style)
+                options.navigationControlOptions.style = google.maps.NavigationControlStyle[options.navigationControlOptions.style.toUpperCase()];
+            this.map.setOptions(options);
+        },
+        getMap: function() {
+            return this.map;
+        },
+        
+        /**
+         * Funkce, která vytvori listener
+         * @method createListener
+         * @param type {type} typ objektu, na ktery plati udalost
+         * @param event {event} druh udalosti
+         * @param data {data} co se stane pri udalosti
+        */
+        createListener: function(type, event, data) {
+            var target;
+            if (typeof type != &#x27;object&#x27;)
+                type = {type: type};
+            if (type.type == &#x27;map&#x27;)
+                target = this.map;
+            else if (type.type == &#x27;marker&#x27; &amp;&amp; type.marker)
+                target = $(this.mapId).data(type.marker);
+            else if (type.type == &#x27;info&#x27; &amp;&amp; type.marker)
+                target = $(this.mapId).data(type.marker + &#x27;info&#x27;);
+            if (target)
+                return google.maps.event.addListener(target, event, data);
+            else if ((type.type == &#x27;marker&#x27; || type.type == &#x27;info&#x27;) &amp;&amp; this.getMarkerCount() != this.getTmpMarkerCount())
+                var Gmapy = this;
+            setTimeout(function() {
+                Gmapy.createListener(type, event, data);
+            }, this.opts.delay);
+        },
+        
+       /**
+         * Funkce, která vyjme listener
+         * @method removeListener
+        */
+        removeListener: function(listener) {
+            google.maps.event.removeListener(listener);
+        },
+        
+        /**
+         * Funkce, která nastavi info window
+         * @method setInfoWindow
+         * @param tmarker {marker} marker, na ktery ma byt vytvoreno info window
+         * @param html {options} nastaveni parametru info window
+        */
+        setInfoWindow: function(tmarker, html, index) {
+            var Gmapy = this;
+            var marker = $(this.mapId).data(tmarker);
+//            html.content = Gmapy.opts.html_prepend + html.content + Gmapy.opts.html_append;
+            html.content = html.content;
+            var infowindow = new google.maps.InfoWindow(html);
+            this.infoWindowsArray.splice(index, 1);
+            this.infoWindowsArray.push(infowindow);
+            infowindow.show = false;
+            $(Gmapy.mapId).data(marker.id + &#x27;info&#x27;, infowindow);
+            if (html.popup) {
+                Gmapy.openWindow(infowindow, marker, html);
+                infowindow.show = true; 
+            }
+            google.maps.event.addListener(marker, &#x27;click&#x27;, function() { 
+                if (openedInfoWindow != null) openedInfoWindow.close();
+                infowindow.open(this.map, marker);
+                openedInfoWindow = infowindow;
+                google.maps.event.addListener(infowindow, &#x27;closeclick&#x27;, function() {
+                    openedInfoWindow = null;
+                });
+            });
+             
+        },
+        openWindow: function(infowindow, marker, html) {
+            if (this.opts.oneInfoWindow)
+                this.clearInfo();
+            if (html.ajax) {
+                infowindow.open(this.map, marker);
+                $.ajax({
+                    url: html.ajax,
+                    success: function(html) {
+                        infowindow.setContent(html);
+                    }
+                });
+            }
+            else if (html.id) {
+                infowindow.setContent($(html.id).html());
+                infowindow.open(this.map, marker);
+            }
+            else
+                infowindow.open(this.map, marker);
+        },
+        getInfo: function(indexOfInfoWindow) {
+//                var info = html.content;
+//                return info;
+            var infocontent = this.infoWindowsArray[indexOfInfoWindow].getContent();
+            return infocontent;
+                
+	},
+        closeInfo: function() {
+             for (var i = 0, l = this.markers.length; i &lt; l; i++) {
+		var info = $(this.mapId).data(this.markers[i] + &#x27;info&#x27;);
+		if(info) {
+			info.close();
+			info.show = false;
+		}
+             }
+	},
+        createPolyline: function(poly) {
+            poly.type = &#x27;polyline&#x27;;
+            return this.createOverlay(poly);
+        },
+        createPolygon: function(poly) {
+            poly.type = &#x27;polygon&#x27;;
+            return this.createOverlay(poly);
+        },
+        createCircle: function(poly) {
+            poly.type = &#x27;circle&#x27;;
+            return this.createOverlay(poly);
+        },
+        createRectangle: function(poly) {
+            poly.type = &#x27;rectangle&#x27;;
+            return this.createOverlay(poly);
+        },
+        createOverlay: function(poly) {
+            var overlay = [];
+            if (!poly.id) {
+                this.count++;
+                poly.id = this.opts.polyId + this.count;
+            }
+            switch (poly.type) {
+                case &#x27;polyline&#x27;:
+                    if (poly.coords.length &gt; 0) {
+                        for (var j = 0, l = poly.coords.length; j &lt; l; j++)
+                            overlay.push(new google.maps.LatLng(poly.coords[j].latitude, poly.coords[j].longitude));
+                        overlay = new google.maps.Polyline({
+                            map: this.map,
+                            path: overlay,
+                            strokeColor: poly.color ? poly.color : this.opts.polyline.color,
+                            strokeOpacity: poly.opacity ? poly.opacity : this.opts.polyline.opacity,
+                            strokeWeight: poly.weight ? poly.weight : this.opts.polyline.weight
+                        });
+                    }
+                    else
+                        return false;
+                    break;
+                case &#x27;polygon&#x27;:
+                    if (poly.coords.length &gt; 0) {
+                        for (var j = 0, l = poly.coords.length; j &lt; l; j++)
+                            overlay.push(new google.maps.LatLng(poly.coords[j].latitude, poly.coords[j].longitude));
+                        overlay = new google.maps.Polygon({
+                            map: this.map,
+                            path: overlay,
+                            strokeColor: poly.color ? poly.color : this.opts.polygon.color,
+                            strokeOpacity: poly.opacity ? poly.opacity : this.opts.polygon.opacity,
+                            strokeWeight: poly.weight ? poly.weight : this.opts.polygon.weight,
+                            fillColor: poly.fillColor ? poly.fillColor : this.opts.polygon.fillColor,
+                            fillOpacity: poly.fillOpacity ? poly.fillOpacity : this.opts.polygon.fillOpacity
+                        });
+                    }
+                    else
+                        return false;
+                    break;
+                case &#x27;circle&#x27;:
+                    overlay = new google.maps.Circle({
+                        map: this.map,
+                        center: new google.maps.LatLng(poly.latitude, poly.longitude),
+                        radius: poly.radius,
+                        strokeColor: poly.color ? poly.color : this.opts.circle.color,
+                        strokeOpacity: poly.opacity ? poly.opacity : this.opts.circle.opacity,
+                        strokeWeight: poly.weight ? poly.weight : this.opts.circle.weight,
+                        fillColor: poly.fillColor ? poly.fillColor : this.opts.circle.fillColor,
+                        fillOpacity: poly.fillOpacity ? poly.fillOpacity : this.opts.circle.fillOpacity
+                    });
+                    break;
+                case &#x27;rectangle&#x27;:
+                    overlay = new google.maps.Rectangle({
+                        map: this.map,
+                        bounds: new google.maps.LatLngBounds(new google.maps.LatLng(poly.sw.latitude, poly.sw.longitude), new google.maps.LatLng(poly.ne.latitude, poly.ne.longitude)),
+                        strokeColor: poly.color ? poly.color : this.opts.circle.color,
+                        strokeOpacity: poly.opacity ? poly.opacity : this.opts.circle.opacity,
+                        strokeWeight: poly.weight ? poly.weight : this.opts.circle.weight,
+                        fillColor: poly.fillColor ? poly.fillColor : this.opts.circle.fillColor,
+                        fillOpacity: poly.fillOpacity ? poly.fillOpacity : this.opts.circle.fillOpacity
+                    });
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+            this.addOverlay(poly, overlay);
+            return overlay;
+        },
+        addOverlay: function(poly, overlay) {
+            $(this[this.overlays[poly.type].id]).data(poly.id, overlay);
+            this[this.overlays[poly.type].array].push(poly.id);
+        },
+        setOverlay: function(type, overlay, options) {
+            overlay = $(this[this.overlays[type].id]).data(overlay);
+            if (options.coords &amp;&amp; options.coords.length &gt; 0) {
+                var array = [];
+                for (var j = 0, l = options.coords.length; j &lt; l; j++)
+                    array.push(new google.maps.LatLng(options.coords[j].latitude, options.coords[j].longitude));
+                options.path = array;
+                delete options.coords;
+            }
+            else if (options.ne &amp;&amp; options.sw) {
+                options.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(options.sw.latitude, options.sw.longitude), new google.maps.LatLng(options.ne.latitude, options.ne.longitude));
+                delete options.ne;
+                delete options.sw;
+            }
+            else if (options.latitude &amp;&amp; options.longitude) {
+                options.center = new google.maps.LatLng(options.latitude, options.longitude);
+                delete options.latitude;
+                delete options.longitude;
+            }
+            overlay.setOptions(options);
+        },
+        removeOverlay: function(type, overlay) {
+            var index = $.inArray(overlay, this[this.overlays[type].array]), current;
+            if (index &gt; -1) {
+                current = this[this.overlays[type].array].splice(index, 1);
+                var markerId = current[0];
+                $(this[this.overlays[type].id]).data(markerId).setMap(null);
+                $(this[this.overlays[type].id]).removeData(markerId);
+                return true;
+            }
+            return false;
+        },
+        clearOverlays: function(type) {
+            for (var i = 0, l = this[this.overlays[type].array].length; i &lt; l; i++) {
+                var markerId = this[this.overlays[type].array][i];
+                $(this[this.overlays[type].id]).data(markerId).setMap(null);
+                $(this[this.overlays[type].id]).removeData(markerId);
+            }
+            this[this.overlays[type].array] = [];
+        },
+        /**
+         * Přidá drawing managera do mapy
+         * @method addDrawingManager
+         * @param {String} controlPosition  pozice drawing managera v mapě, na výběr jsou (bottom-center, bottom-right,left-bottom, left-center, left-top, 
+                   right-bottom, right-center, right-top, left-center, top-center, top-left, top-right)
+         * @param {String} defaultDrawMode  typ vrstvy, která bude nastavena jako defaultní, na výběr jsou (marker, circle, polygon, polyline, rectangle)
+         * @param {Array} showModes  do pole [..., ..., ...] se vloží všechny typy vrstev, které mají být zobrazeny v Drawing Manageru
+         * @param {Object} markerOpt  objekt, který nese nastavení markeru
+         * @param {Object} circleOpt  objekt, který nese nastavení kruhu
+         * @param {Object} polygonOpt  objekt, který nese nastavení polygonu
+         * @param {Object} polylineOpt  objekt, který nese nastavení křivky
+         * @param {Object} rectangleOpt  objekt, který nese nastavení obdélníku
+         */
+        addDrawingManager: function(controlPosition, defaultDrawMode, showModes, markerOpt, circleOpt, polygonOpt, polylineOpt, rectangleOpt) {
+            var defDrawMode;
+            var cntrlPosition;
+            
+            
+            switch(defaultDrawMode) {
+                case &#x27;marker&#x27;: defDrawMode = google.maps.drawing.OverlayType.MARKER; break;
+                case &#x27;circle&#x27;: defDrawMode = google.maps.drawing.OverlayType.CIRCLE; break;
+                case &#x27;polygon&#x27;: defDrawMode = google.maps.drawing.OverlayType.POLYGON; break;
+                case &#x27;polyline&#x27; : defDrawMode = google.maps.drawing.OverlayType.POLYLINE; break;
+                case &#x27;rectangle&#x27; : defDrawMode = google.maps.drawing.OverlayType.RECTANGLE; break;
+                default : defDrawMode = google.maps.drawing.OverlayType.MARKER;
+            }
+            switch(controlPosition) {
+                case &#x27;bottom-center&#x27;: cntrlPosition = google.maps.ControlPosition.BOTTOM_CENTER; break;
+                case &#x27;bottom-left&#x27;: cntrlPosition = google.maps.ControlPosition.BOTTOM_LEFT; break;
+                case &#x27;bottom-right&#x27;: cntrlPosition = google.maps.ControlPosition.BOTTOM_RIGHT; break;
+                case &#x27;left-bottom&#x27; : cntrlPosition = google.maps.ControlPosition.LEFT_BOTTOM; break;
+                case &#x27;left-center&#x27; : cntrlPosition = google.maps.ControlPosition.LEFT_CENTER; break;
+                case &#x27;left-top&#x27;: cntrlPosition = google.maps.ControlPosition.LEFT_TOP; break;
+                case &#x27;right-bottom&#x27;: cntrlPosition = google.maps.ControlPosition.RIGHT_BOTTOM; break;
+                case &#x27;right-center&#x27;: cntrlPosition = google.maps.ControlPosition.RIGHT_CENTER; break;
+                case &#x27;right-top&#x27; : cntrlPosition = google.maps.ControlPosition.RIGHT_TOP; break;
+                case &#x27;left-center&#x27; : cntrlPosition = google.maps.ControlPosition.LEFT_CENTER; break;
+                case &#x27;top-center&#x27;: cntrlPosition = google.maps.ControlPosition.TOP_CENTER; break;
+                case &#x27;top-left&#x27; : cntrlPosition = google.maps.ControlPosition.TOP_LEFT; break;
+                case &#x27;top-right&#x27; : cntrlPosition = google.maps.ControlPosition.TOP_RIGHT; break;
+                default : cntrlPosition = google.maps.ControlPosition.TOP_CENTER;
+            }
+            drawingManager = new google.maps.drawing.DrawingManager({
+                drawingMode: defDrawMode,
+                drawingControl: true,
+                drawingControlOptions: {
+                    position: cntrlPosition,
+                    drawingModes: showModes
+                },
+                markerOptions: markerOpt,
+                circleOptions: circleOpt,
+                polygonOptions: polygonOpt,
+                polylineOptions: polylineOpt,
+                rectangleOptions: rectangleOpt
+                
+            });
+            google.maps.event.addListener(drawingManager, &#x27;overlaycomplete&#x27;, function(e) {
+                all_overlays.push(e);
+            });
+            drawingManager.setMap(this.map); 
+        },
+        /**
+         * Funkce skryje Drawing Manager
+         *
+         */
+        hideDrawingManager: function() {
+            drawingManager.setOptions({
+                drawingControl: false
+            });
+        },
+        /**
+         * Funkce zobrazí Drawing Manager
+         * 
+         */
+        showDrawingManager: function() {
+            drawingManager.setOptions({
+                drawingControl: true
+            });
+        },
+        /**
+         * Funkce vymaže všechny tvary z mapy nakreslené Drawing Managerem
+         *
+         */
+        deleteDrawingManagerShape: function() {
+           for (var i=0; i &lt; all_overlays.length; i++){
+                all_overlays[i].overlay.setMap(null);
+            }
+            all_overlays = [];    
+        },
+        /**
+         * Funkce ukáže nebo schová marker
+         * @param {Object} marker  marker, který má být ukázán nebo skryt
+         * @param {Boolean} display  nastaví zda bude marker zobrazen nebo skryt
+         * @return {undefined}
+         */
+        showHideMarker: function(marker, display) {
+            if (typeof display === &#x27;undefined&#x27;) {
+                if (this.getVisibleMarker(marker)) {
+                    $(this.mapId).data(marker).setVisible(false);
+                    var info = $(this.mapId).data(marker + &#x27;info&#x27;);
+                    if (info &amp;&amp; info.show) {
+                        info.close();
+                        info.show = false;
+                    }
+                }
+                else
+                    $(this.mapId).data(marker).setVisible(true);
+            }
+            else
+                $(this.mapId).data(marker).setVisible(display);
+        },
+        /**
+         * Funkce, která vrací počet markerů na mapě
+         * @return {int} Vrátí počet markerů v mapě
+         */
+        getMarkerCount: function() {
+            return this.markers.length;
+        },
+        getTmpMarkerCount: function() {
+            return this.tmpMarkers.length;
+        },
+        
+        /**
+         * Funkce, která vytvori marker
+         * @method createMarker
+         * @param marker {marker} nastaveni parametru markeru
+        */
+        createMarker: function(marker) {
+            if (!marker.geocode) {
+                this.count++;
+                if (!marker.id)
+                    marker.id = this.opts.prefixId + this.count;
+                this.tmpMarkers.push(marker.id);
+            }
+            if (marker.address &amp;&amp; !marker.geocode) {
+                this.geoMarkers.push(marker);
+                this.geoMarker();
+            }
+            else if (marker.latitude &amp;&amp; marker.longitude || marker.position) {
+                var options = {map: this.map};
+                options.id = marker.id;
+//                options.group = marker.group ? marker.group : this.opts.groupId;
+//                options.zIndex = marker.zIndex ? marker.zIndex : 0;
+//                options.zIndexOrg = marker.zIndexOrg ? marker.zIndexOrg : 0;
+                if (marker.visible == false)
+                    options.visible = marker.visible;
+                if (marker.title)
+                    options.title = marker.title;
+                if (marker.draggable)
+                    options.draggable = marker.draggable;
+                if (marker.icon &amp;&amp; marker.icon.image) {
+                    options.icon = marker.icon.image;
+                    if (marker.icon.shadow)
+                        options.shadow = marker.icon.shadow;
+                }
+                else if (marker.icon)
+                    options.icon = marker.icon;
+                else if (this.opts.icon &amp;&amp; this.opts.icon.image) {
+                    options.icon = this.opts.icon.image;
+                    if (this.opts.icon.shadow)
+                        options.shadow = this.opts.icon.shadow;
+                }
+                else if (this.opts.icon)
+                    options.icon = this.opts.icon;
+                options.position = marker.position ? marker.position : new google.maps.LatLng(marker.latitude, marker.longitude);
+                var cmarker = new google.maps.Marker(options);
+                if (marker.html) {
+                    if (!marker.html.content &amp;&amp; !marker.html.ajax &amp;&amp; !marker.html.id)
+                        marker.html = {content: marker.html};
+                    else if (!marker.html.content)
+                        marker.html.content = null;
+                    this.setInfoWindow(cmarker, marker.html);
+                }
+                this.addMarker(cmarker);
+                return cmarker;
+            }
+        },
+        addMarker: function(marker) {
+            $(this.mapId).data(marker.id, marker);
+            this.markers.push(marker.id);
+        },
+        setMarker: function(marker, options) {
+            var tmarker = $(this.mapId).data(marker);
+            delete options.id;
+            delete options.visible;
+            if (options.icon) {
+                var toption = options.icon;
+                delete options.icon;
+                if (toption &amp;&amp; toption == &#x27;default&#x27;) {
+                    if (this.opts.icon &amp;&amp; this.opts.icon.image) {
+                        options.icon = this.opts.icon.image;
+                        if (this.opts.icon.shadow)
+                            options.shadow = this.opts.icon.shadow;
+                    }
+                    else if (this.opts.icon)
+                        options.icon = this.opts.icon;
+                }
+                else if (toption &amp;&amp; toption.image) {
+                    options.icon = toption.image;
+                    if (toption.shadow)
+                        options.shadow = toption.shadow;
+                }
+                else if (toption)
+                    options.icon = toption;
+            }
+            if (options.address) {
+                this.geocode({address: options.address}, {markerId: tmarker});
+                delete options.address;
+                delete options.latitude;
+                delete options.longitude;
+                delete options.position;
+            }
+            else if (options.latitude &amp;&amp; options.longitude || options.position) {
+                if (!options.position)
+                    options.position = new google.maps.LatLng(options.latitude, options.longitude);
+            }
+            tmarker.setOptions(options);
+        },
+        
+        /**
+         * Funkce, která vyjme marker
+         * @method removeMarker
+         * @param marker {marker} marker, ktery ma byt vyjmut
+        */
+        removeMarker: function(marker) {
+            var index = $.inArray(marker, this.markers), actual;
+            if (index &gt;= -1) {
+                //this.tmpMarkers.splice(index, 1);
+                actual = this.markers.splice(index, 1);
+                var markerId = actual[0];
+                var marker = $(this.mapId).data(markerId);
+                var info = $(this.mapId).data(markerId + &#x27;info&#x27;);
+                marker.setVisible(false);
+                marker.setMap(null);
+                $(this.mapId).removeData(markerId);
+                if (info) {
+                    info.close();
+                    info.show = false;
+                    $(this.mapId).removeData(markerId + &#x27;info&#x27;);
+                }
+                return true;
+            }
+            return false;
+        },
+        
+        /**
+         * Funkce, která odstrani vsechny markery
+         * @method clearMarkers
+        */
+        clearMarkers: function() {
+            for (var i = 0, l = this.markers.length; i &lt; l; i++) {
+                var markerId = this.markers[i];
+                var marker = $(this.mapId).data(markerId);
+                var info = $(this.mapId).data(markerId + &#x27;info&#x27;);
+                marker.setVisible(false);
+                marker.setMap(null);
+                $(this.mapId).removeData(markerId + &#x27;info&#x27;);
+                if (info) {
+                    info.close();
+                    info.show = false;
+                    $(this.mapId).removeData(markerId);
+                }
+            }
+            this.singleMarker = false;
+            this.lockGeocode = false;
+            this.markers = [];
+            this.tmpMarkers = [];
+            this.geoMarkers = [];
+        }    
+    } 
+    
+})(jQuery);
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
