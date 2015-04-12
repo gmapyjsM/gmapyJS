@@ -109,6 +109,44 @@ em, #map, #map2 {
 #showElevate{
     margin-left: 5px;
 }
+        #trafficBtn{
+            margin-left: 5px;
+            z-index: 3;
+            background-color: black;
+            color: white;
+        }
+        #bicyclingBtn{
+            margin-left: 5px;
+            z-index: 3;
+            background-color: black;
+            color: white;
+        }
+        #transitBtn{
+            margin-left: 5px;
+            z-index: 3;
+            background-color: black;
+            color: white;
+        }
+        #heatBtn{
+            margin-left: 5px;
+            z-index: 3;
+            background-color: black;
+            color: white;
+        }
+        #layerDiv {
+            position: absolute;
+            top: 460px;
+            left: 64%;
+            height: 190px;
+            width: 290px;
+            margin-left: -180px;
+            z-index: 2;
+            background-color: lightgray;
+            border-radius: 0px 0px 10px 10px;
+            padding: 5px;
+            overflow: auto;
+        }
+
 #b5{
     margin-left: 2px;
 }
@@ -126,13 +164,26 @@ em, #map, #map2 {
             padding: 5px;
 }
 
-#showRoute{
-    margin-left: 60px;
-}
+        #showRoute{
+            margin-left: 60px;
+        }
+        #directions-panel {
+            position: absolute;
+            top: 890px;
+            left: 52%;
+            height: 500px;
+            float: right;
+            width: 630px;
+            overflow: auto;
+        }
 
-#deleteMarkersButton {
+        #deleteMarkersButton {
             margin-left: 13px;
-}
+        }
+        #deleteMarker {
+            margin-left: 13px;
+            border-radius: 10px 10px 10px 10px;
+        }
         #createNewDay {
             margin-left: 15px;
         }
@@ -160,10 +211,10 @@ em, #map, #map2 {
         }
         #elevation_chart {
             position: absolute;
-            top: 460px;
-            left: 63%;
-            height: 100px;
-            width: 350px;
+            top: 690px;
+            left: 65%;
+            height: 200px;
+            width: 630px;
             margin-left: -180px;
             z-index: 2;
             padding: 5px;
@@ -173,23 +224,12 @@ em, #map, #map2 {
             top: 460px;
             left: 87%;
             height: 150px;
-            width: 330px;
+            width: 300px;
             margin-left: -180px;
             z-index: 2;
             padding: 5px;
         }
-        
-        #elevation_chart_last {
-            position: absolute;
-            top: 460px;
-            left: 87%;
-            height: 150px;
-            width: 330px;
-            margin-left: -180px;
-            z-index: 2;
-            padding: 5px;
-        }
-        
+
         #itineraryBox {
             position: absolute;
             top: 40px;
@@ -294,6 +334,7 @@ em, #map, #map2 {
             padding: 5px;
             margin-left: -180px;
             z-index: 2;
+            border-radius: 0px 0px 10px 10px;
             overflow: auto;
             font-size: 15px;
         }
@@ -345,11 +386,12 @@ em, #map, #map2 {
             position: absolute;
             top: 460px;
             left: 87%;
-            height: 200px;
+            height: 190px;
             width: 336px;
             margin-left: -180px;
             z-index: 2;
             background-color: lightgray;
+            border-radius: 0px 0px 10px 10px;
             padding: 5px;
             overflow: auto;
         }
@@ -366,6 +408,10 @@ em, #map, #map2 {
             height: 500px;
             padding: 5px;
             font-weight: bold;
+        }
+        #formDownloadKML {
+            display: block;
+            margin: 10px;
         }
         
         
