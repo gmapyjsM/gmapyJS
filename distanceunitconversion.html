@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Převod jednotek vzdálenosti | Gmapy.js</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link type="text/css" href="styles.css" rel="stylesheet" /> 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript" src="gmapy.js"></script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript"> 
+$(document).ready(function() {
+	$("#mapaExample").Gmapy({                                                // vytvoření objektu Gmapy pro div pojmenovaný mapaExample
+            zoom: 17,                                                            // určení přiblížení na mapu na hodnotu 17
+            latitude: 49.814782471725145,                                        // určení latitude souřadnice, kde bude mapa vycentrována
+            longitude: 18.268461227416992                                        // určení longitude souřadnice, kde bude mapa vycentrována
+        });
+        
+        var marker1 = $.Gmapy.createMarker({                                     // vytvoří marker pojmenovaný marker1 a jako parametr je mu předán objekt s vlastnosmi markeru (konkrétně souřadnice a posouvatelnost markeru)
+                latitude: 49.814782471725145,
+		longitude: 18.268461227416992,
+                draggable: true
+        });
+        var marker2 = $.Gmapy.createMarker({                                     // vytvoří marker pojmenovaný marker2 na zadaných souřadnicích stejně jako u marker1
+                latitude: 49.814311712558876,
+		longitude: 18.264877796173096,
+                draggable: true
+        });        
+        
+        $.Gmapy.createListener({type:'map'}, 'click', function(event) {          // vytvoří listener, který po kliknutí na mapu zavolá funkci
+            $.Gmapy.clearRoutes();                                               // smaže předchozí trasu
+            $.Gmapy.displayRoute(marker1.getPosition(), marker2.getPosition());  // vytvoří a zobrazí trasu mezi marker1 a marker2
+            var distancekm = $.Gmapy.getDistance(marker1.getPosition(), marker2.getPosition()); // uloží do proměnné distancekm vypočítanou vzdálenost mezi body marker1 a marker2 v kilometrech
+            var distancemiles = $.Gmapy.kilometresToMiles(distancekm);           // uloží do proměnné distancemiles výsledek v mílích při převodu z kilometrů
+            var distancemetres = $.Gmapy.milesToMeters(distancemiles);           // uloží do proměnné distancemetres výsledek v metrech při převodu z mil
+            document.getElementById("distanceUnits").innerHTML = distancekm + " km<br/>" + distancemiles + " mílí<br/>" + distancemetres + " metrů" ; // v elementu distanceUnits vypíše všechny výsledky výpočtů
+	});
+
+});
+
+function directionOptions(){                                                     // funkce, která vrací vlastnosti trasy, viz příklad trasa
+  return {strokeWeight: 5, strokeColor: '#ff0000', strokeOpacity: 0.6};
+}
+</script>
+    </head>
+    <body>
+        <a href="index.html"><div id="logoPlanner"></div></a>
+        
+    <div id="menu1">
+        <table>
+        <tr>
+        <td>
+        <ul class="menu">
+        <li><a href="">Příklady</a>
+        <ul>
+        <li><a href="newMap.html">mapa a marker</a></li>
+        <li><a href="events.html">události</a></li>
+        <li><a href="route.html">trasa</a></li>
+        <li><a href="geocode.html">geokodovani</a></li>
+        <li><a href="polyline.html">křivka</a></li>
+        <li><a href="polygon.html">polygon</a></li>
+        <li><a href="elevation.html">výškový profil</a></li>
+        <li><a href="distanceunits.html">výpočet vzdálenosti</a></li>
+        <li><a href="distanceunitconversion.html">jednotky vzdálenosti</a></li>
+        <li><a href="drawmanager.html">draw manager</a></li>
+        <li><a href="kmlsite.html">KML a GPX</a></li>
+        <li><a href="classiclayer.html">dopravní vrstva</a></li>
+        <li><a href="groundoverlay.html">ground overlay</a></li>
+        <li><a href="heatmaplayer.html">heat map vrstva</a></li>
+        <li><a href="fusiontables.html">fusion tables</a></li>
+        </ul>
+        </li>
+        </ul>
+        </td>
+        <td>
+        <ul class="menu">
+        <li><a href="">Dokumentace</a>
+        <ul>
+        <li><a href="dokumentaceJS/cs/out/index.html">v češtině</a></li>
+        <li><a href="dokumentaceJS/en/out/index.html">v angličtině</a></li>
+        </ul>
+        </li>
+        </ul>
+        </td>
+        <td>
+        <ul class="menu">
+        <li><a href="index.html">Gmapy.js</a>
+        <ul>
+        <li><a href="aboutGM.html">O gmapy.js</a></li>
+        </ul>
+        </li>
+        </ul>
+        </td> 
+        </table>
+     </div>
+             <div id="menu2">
+         <p id="examples"><strong>Vyberte příklad:</strong> 
+<select id="examplesGJS" onchange="location.href=this.value">
+	<optgroup label="Základy">
+		<option value="newMap.html">1. Jednoduchá mapa a marker</option>
+		<option value="events.html" >2. Události</option>
+		<option value="route.html" >3. Trasa</option>
+		<option value="geocode.html" >4. Geokódování a reverzní geokódování</option>
+		<option value="polyline.html" >5. Křivka</option>
+		<option value="polygon.html" >7. Polygon</option>
+                <option value="elevation.html" >8. Výškový profil</option>
+		<option value="distanceunits.html" >9. Výpočet vzdálenosti</option>
+		<option value="distanceunitconversion.html" selected='selected'>10. Výpočet jednotek vzdálenosti</option>
+		<option value="drawmanager.html" >11. Draw Manager</option>
+                <option value="kmlsite.html" >12. KML a GPX</option>
+                <option value="classiclayer.html" >13. Dopravní vrstva</option>
+                <option value="groundoverlay.html" >14. Ground Overlay</option>
+		<option value="heatmaplayer.html" >15. Heat map vrstva</option>
+		<option value="fusiontables.html" >16. Fusion Tables</option>
+	</optgroup>
+</select>
+</p>
+     </div>
+<div id="wrap">
+	<div id="content">
+		<br/>                
+                <iframe style="width: 960px; height: 500px" src="//jsfiddle.net/GmapyJS/z41jj68d/2/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+                <div id="htmlBoxHead">Popis</div>
+                <div id="htmlBox">
+                    Tento příklad funguje stejně jako příklad s výpočtem vzdálenosti, jen je výsledek navíc převeden na míle a metry.
+                    Funkce podporující převod z kilometrů a metrů na míle a opačně, vyžadují jako parametr opačnou hodnotu a tu pak přepočtou. 
+                    V černém obdélníku uprostřed zobrazí kód převedené jednotky v kilometrech, díky funkci kilometresToMiles v mílích a 
+                    pomocí funkce milesToMeters i v metrech.
+                     
+                </div>
+        </div>
+</div>
+        <div></div>
+    </body>
+</html>
