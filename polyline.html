@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Polyline | Gmapy.js</title>
@@ -19,31 +14,31 @@ and open the template in the editor.
 <script type="text/javascript"> 
      
 $(document).ready(function() {
-	$("#mapa").Gmapy({
-            zoom: 14,
-            latitude: 55.841394,
-            longitude: 48.99502
+	$("#mapaExample").Gmapy({                                       // vytvoření objektu Gmapy pro div pojmenovaný mapaExample
+            zoom: 14,                                                   // určení přiblížení na mapu na hodnotu 14
+            latitude: 49.827186709899394,                               // určení latitude souřadnice, kde bude mapa vycentrována
+            longitude: 18.263568878173828                               // určení longitude souřadnice, kde bude mapa vycentrována
         });
-        $.Gmapy.createPolyline({
-			color: "#00CC00",
-			opacity: 0.5,
-			weight:	4,
-			coords:	[{
-					latitude: 55.841394,
-					longitude: 48.99502
+        $.Gmapy.createPolyline({                                        // vytvoří křivku a jako parametr ji vkládáme následující:
+			color: "#00CC00",                               // barva křivky 
+			opacity: 0.5,                                   // průhlednost křivky
+			weight:	4,                                      // tloušťka křivky
+			coords:	[{                                      // souřadnice kudy povede křivka jsou zadány vždy jako latitude a longitude v objektech oddělených čárkou:
+					latitude: 49.83172675193672,    
+					longitude: 18.269920349121094
 				},{ 
-					latitude: 53.189575, 
-					longitude: 50.313379
+					latitude: 49.827186709899394, 
+					longitude: 18.263568878173828
 				},{ 
-					latitude: 48.651052,
-					longitude: 44.424707
-			}]
+					latitude: 49.83073019384823,
+					longitude: 18.245973587036133
+			}]                                               // konec pole se souřadnicemi
 	}); 
 });
 </script>
     </head>
     <body>
-        <div id="logoPlanner"></div>
+       <a href="index.html"><div id="logoPlanner"></div></a>
         
     <div id="menu1">
         <table>
@@ -56,9 +51,16 @@ $(document).ready(function() {
         <li><a href="events.html">události</a></li>
         <li><a href="route.html">trasa</a></li>
         <li><a href="geocode.html">geokodovani</a></li>
-        <li><a href="polyline.html">křivka</a></li>
+        <li><a href="polyline.html" >křivka</a></li>
         <li><a href="polygon.html">polygon</a></li>
+        <li><a href="elevation.html">výškový profil</a></li>
+        <li><a href="distanceunits.html">výpočet vzdálenosti</a></li>
+        <li><a href="distanceunitconversion.html">jednotky vzdálenosti</a></li>
         <li><a href="drawmanager.html">draw manager</a></li>
+        <li><a href="kmlsite.html">KML a GPX</a></li>
+        <li><a href="classiclayer.html">dopravní vrstva</a></li>
+        <li><a href="groundoverlay.html">ground overlay</a></li>
+        <li><a href="heatmaplayer.html">heat map vrstva</a></li>
         <li><a href="fusiontables.html">fusion tables</a></li>
         </ul>
         </li>
@@ -68,8 +70,8 @@ $(document).ready(function() {
         <ul class="menu">
         <li><a href="">Dokumentace</a>
         <ul>
-        <li><a href="out/index.html">v češtině</a></li>
-<!--        <li><a href="../css/margin/">v angličtině</a></li>-->
+        <li><a href="dokumentaceJS/cs/out/index.html">v češtině</a></li>
+        <li><a href="dokumentaceJS/en/out/index.html">v angličtině</a></li>
         </ul>
         </li>
         </ul>
@@ -78,7 +80,6 @@ $(document).ready(function() {
         <ul class="menu">
         <li><a href="index.html">Gmapy.js</a>
         <ul>
-<!--        <li><a href="../php/kniha_navstev.php">Průvodce plánovačem</a></li>-->
         <li><a href="aboutGM.html">O gmapy.js</a></li>
         </ul>
         </li>
@@ -87,49 +88,37 @@ $(document).ready(function() {
         </table>
      </div>
              <div id="menu2">
-        <select id="over" style="margin: 4px; width:180px;" >
-            <option>Latitude, Longitude</option>
-            <option selected="selected">Souradnice LatLng</option>
-        </select>
+                 <p id="examples"><strong>Vyberte příklad:</strong> 
+<select id="examplesGJS" onchange="location.href=this.value">
+	<optgroup label="Základy">
+		<option value="newMap.html">1. Jednoduchá mapa a marker</option>
+		<option value="events.html" >2. Události</option>
+		<option value="route.html" >3. Trasa</option>
+		<option value="geocode.html" >4. Geokódování a reverzní geokódování</option>
+		<option value="polyline.html" selected='selected'>5. Křivka</option>
+		<option value="polygon.html" >7. Polygon</option>
+		<option value="elevation.html" >8. Výškový profil</option>
+		<option value="distanceunits.html" >9. Výpočet vzdálenosti</option>
+		<option value="distanceunitconversion.html" >10. Výpočet jednotek vzdálenosti</option>
+		<option value="drawmanager.html" >11. Draw Manager</option>
+                <option value="kmlsite.html" >12. KML a GPX</option>
+                <option value="classiclayer.html" >13. Dopravní vrstva</option>
+                <option value="groundoverlay.html" >14. Ground Overlay</option>
+		<option value="heatmaplayer.html" >15. Heat map vrstva</option>
+		<option value="fusiontables.html" >16. Fusion Tables</option>
+	</optgroup>
+</select>
+</p> 
      </div>
 <div id="wrap">
 	<div id="content">
 		<br/>
-		<div id="mapa">MAP</div>
+                
+		<iframe style="width: 960px; height: 500px" src="//jsfiddle.net/GmapyJS/rtrqLjwc/2/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
                 <div id="htmlBoxHead">Popis</div>
                 <div id="htmlBox">
-                   Funkce createPolyline zobrazuje křivku na základě zadaných latitude a longitude souřadnic. Funkci předáváme 
-                   jako parametr vlastnosti křivky známé z Google Maps API
-                </div>
-                <div id="jsBoxHead">JavaScript</div>
-                <div id="jsBox">
-                    <pre>
- $(document).ready(function() {
-    $("#mapa").Gmapy({
-        zoom: 14,
-        latitude: 49.814782471725145, 
-        longitude: 18.268461227416992,
-        markers: [{  
-            latitude: 49.814782471725145, 
-            longitude: 18.268461227416992  
-        }]
-    });
- $.Gmapy.createPolyline({
-			color: "#00CC00",
-			opacity: 0.5,
-			weight:	4,
-			coords:	[{
-					latitude: 55.841394,
-					longitude: 48.99502
-				},{ 
-					latitude: 53.189575, 
-					longitude: 50.313379
-				},{ 
-					latitude: 48.651052,
-					longitude: 44.424707
-			}]
-});
-                    </pre>
+                    Funkce createPolyline zobrazuje křivku na základě zadaných latitude a longitude souřadnic. Funkci předáváme 
+                   jako parametr vlastnosti křivky známé z Google Maps API                   
                 </div>
         </div>
 </div>
