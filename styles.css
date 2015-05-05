@@ -13,6 +13,11 @@ and open the template in the editor.
         width: 960px;
 }
 
+#mapaG{
+	height: 600px;
+        width: 960px;
+}
+
 em, #map, #map2 {
 	margin:0 auto;
 	height:400px;
@@ -48,7 +53,7 @@ em, #map, #map2 {
 	height: 80px;
         width: 400px;
         background-color: whitesmoke;
-        background: whitesmoke url(https://olclxq-bn1305.files.1drv.com/y2pJujzkbMdN67dCuh22eAQXoEtvhTAwoy8nO3Rqt1zVPO34T0p8wNInEGL5FcZ0_vVLpYfzfFk_0AV8Mf0qX7_KIUb24DN27Qvs8_ntVup-ZKEDU7_HaoIwQnV4fQc1L7uxlcBhhgeHNnrrlhpe1FZgA/tripPlanner.jpg?psid=1) no-repeat 0 0;
+        background: whitesmoke url(img/tripPlanner.jpg) no-repeat 0 0;
         /*background:white url(logo.png) no-repeat 0 0*/
 }
 
@@ -209,16 +214,82 @@ em, #map, #map2 {
             z-index: 2;
             padding: 5px;
         }
-        #elevation_chart {
+/*        #distanceUnits {
             position: absolute;
-            top: 690px;
+            left: 35%;
+            height: 50px;
+            width: 350px;
+            margin-left: -180px;
+            border-top: 3px solid #fff;
+            border-left: 3px solid #253D85;
+            border-right: 3px solid #253D85;
+            z-index: 2;
+            background-color: black;
+            color: #fff;
+            font-size: 18px;
+            padding: 5px;
+            overflow: auto;
+        }*/
+        #changeChart{ 
+            position: absolute;
+            top: 854px;
             left: 65%;
-            height: 200px;
+            height: 25px;
             width: 630px;
+            margin-left: -180px;
+            background-color: burlywood;
+            border-radius: 10px 10px 10px 10px;
+            z-index: 2;
+            padding: 5px;
+        }
+        
+        #elevation_graph {
+            position: absolute;
+            top: 3px;
+            left: 550px;
+            height: 100px;
+            width: 400px;
             margin-left: -180px;
             z-index: 2;
             padding: 5px;
         }
+/*        #elevationBox {
+            position: absolute;
+            left: 350px;
+            top: 3px;
+            height: 17px;
+            width: 160px;
+            margin-left: -180px;
+            z-index: 3;
+            background-color: black;
+            color: white;
+            padding: 5px;
+        }*/
+
+        #elevation_chart { 
+            position: absolute;
+            top: 670px;
+            left: 65%;
+            height: 170px;
+            width: 630px;
+            margin-left: -180px;
+            background-color: #3455B9;
+            border-radius: 10px 10px 10px 10px;
+            z-index: 2;
+            padding: 5px;
+        }
+/*        #elevation_graph {
+            position: absolute;
+            top: 350px;
+            left: 70%;
+            height: 180px;
+            width: 400px;
+            margin-left: -180px;
+            background-color: #fff;
+            z-index: 2;
+            padding: 5px;
+        }*/
+        
         #elevation_chart_last {
             position: absolute;
             top: 460px;
@@ -229,7 +300,7 @@ em, #map, #map2 {
             z-index: 2;
             padding: 5px;
         }
-
+        
         #itineraryBox {
             position: absolute;
             top: 40px;
@@ -245,11 +316,11 @@ em, #map, #map2 {
             padding: 5px;
             overflow: auto;
         }
-        #jsBox {
+/*        #jsBox {
             position: absolute;
             top: 495px;
             left: 14%;
-            height: 290px;
+            height: 80px;
             width: 944px;
             margin-left: -180px;
             border-top: 3px solid #fff;
@@ -271,7 +342,7 @@ em, #map, #map2 {
             background-color: black;
             color: #fff;
             padding: 5px;
-        }
+        }*/
         #htmlBoxHead {
             position: absolute;
             top: 7px;
@@ -289,7 +360,7 @@ em, #map, #map2 {
             position: absolute;
             top: 40px;
             left: 86%;
-            height: 400px;
+            height: 550px;
             width: 350px;
             margin-left: -180px;
             border-top: 3px solid #fff;
@@ -412,6 +483,11 @@ em, #map, #map2 {
         #formDownloadKML {
             display: block;
             margin: 10px;
+        }
+        
+        #contentExample {
+            height: 500px;
+           
         }
         
         
