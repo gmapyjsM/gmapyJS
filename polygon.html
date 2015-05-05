@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Polygon | Gmapy.js</title>
@@ -19,32 +14,41 @@ and open the template in the editor.
 <script type="text/javascript"> 
      
 $(document).ready(function() {
-	$("#mapa").Gmapy({
-            zoom: 14,
-            latitude: 54.281258,
-            longitude: 13.487207
+	$("#mapaExample").Gmapy({                                   // vytvoření objektu Gmapy pro div pojmenovaný mapaExample
+            zoom: 14,                                               // určení přiblížení na mapu na hodnotu 14
+            latitude: 49.833442998288284,                                    // určení latitude souřadnice, kde bude mapa vycentrována
+            longitude: 18.247175216674805                                    // určení longitude souřadnice, kde bude mapa vycentrována
         });
-        $.Gmapy.createPolygon({
-			color: "#00CC00",
-			fillColor: 'transparent',
-			fillOpacity:	0.0,
-			weight: 	2,
-			coords:	[{
-					latitude: 58.092393, 
-					longitude: 9.883691
+        $.Gmapy.createPolygon({                                     // vytvoří polygon, a jako parametr slouží objekt s vlastnostmi polygonu:
+			color: "#00CC00",                           // barva obtahové linky
+			fillColor: 'transparent',                   // barva výplně (zde nastavena na transparent, tzn. žádná)
+			fillOpacity:	0.0,                        // průhlednost výplně 
+			weight: 	2,                          // tloušťka obtahové linky
+			coords:	[{                                  // souřadnice umístění polygonu v poli ve formě latitude a longitude objektů
+					latitude: 49.834937743874626, 
+					longitude: 18.259878158569336
 				},{ 
-					latitude: 54.281258,
-					longitude: 13.487207
+					latitude: 49.83045336851284,
+					longitude: 18.260908126831055
 				},{ 
-					latitude: 54.740475,
-					longitude: 5.752832
-			}]
+					latitude: 49.8284601793259,
+					longitude: 18.247861862182617
+                                },{ 
+					latitude: 49.833442998288284,
+					longitude: 18.247175216674805
+				},{ 
+					latitude: 49.83460558218142,
+					longitude: 18.250608444213867
+				},{ 
+					latitude: 49.83659851811832,
+					longitude: 18.257389068603516
+			}]                                          // konec pole souřadnic
 	}); 
 });
 </script>
     </head>
     <body>
-        <div id="logoPlanner"></div>
+       <a href="index.html"><div id="logoPlanner"></div></a>
         
     <div id="menu1">
         <table>
@@ -59,7 +63,14 @@ $(document).ready(function() {
         <li><a href="geocode.html">geokodovani</a></li>
         <li><a href="polyline.html">křivka</a></li>
         <li><a href="polygon.html">polygon</a></li>
+        <li><a href="elevation.html">výškový profil</a></li>
+        <li><a href="distanceunits.html">výpočet vzdálenosti</a></li>
+        <li><a href="distanceunitconversion.html">jednotky vzdálenosti</a></li>
         <li><a href="drawmanager.html">draw manager</a></li>
+        <li><a href="kmlsite.html">KML a GPX</a></li>
+        <li><a href="classiclayer.html">dopravní vrstva</a></li>
+        <li><a href="groundoverlay.html">ground overlay</a></li>
+        <li><a href="heatmaplayer.html">heat map vrstva</a></li>
         <li><a href="fusiontables.html">fusion tables</a></li>
         </ul>
         </li>
@@ -69,8 +80,8 @@ $(document).ready(function() {
         <ul class="menu">
         <li><a href="">Dokumentace</a>
         <ul>
-        <li><a href="out/index.html">v češtině</a></li>
-<!--        <li><a href="../css/margin/">v angličtině</a></li>-->
+        <li><a href="dokumentaceJS/cs/out/index.html">v češtině</a></li>
+        <li><a href="dokumentaceJS/en/out/index.html">v angličtině</a></li>
         </ul>
         </li>
         </ul>
@@ -79,7 +90,6 @@ $(document).ready(function() {
         <ul class="menu">
         <li><a href="index.html">Gmapy.js</a>
         <ul>
-<!--        <li><a href="../php/kniha_navstev.php">Průvodce plánovačem</a></li>-->
         <li><a href="aboutGM.html">O gmapy.js</a></li>
         </ul>
         </li>
@@ -88,50 +98,38 @@ $(document).ready(function() {
         </table>
      </div>
              <div id="menu2">
-        <select id="over" style="margin: 4px; width:180px;" >
-            <option>Latitude, Longitude</option>
-            <option selected="selected">Souradnice LatLng</option>
-        </select>
+                 <p id="examples"><strong>Vyberte příklad:</strong> 
+<select id="examplesGJS" onchange="location.href=this.value">
+	<optgroup label="Základy">
+		<option value="newMap.html">1. Jednoduchá mapa a marker</option>
+		<option value="events.html" >2. Události</option>
+		<option value="route.html" >3. Trasa</option>
+		<option value="geocode.html" >4. Geokódování a reverzní geokódování</option>
+		<option value="polyline.html" >5. Křivka</option>
+		<option value="polygon.html" selected='selected'>7. Polygon</option>
+		<option value="elevation.html" >8. Výškový profil</option>
+		<option value="distanceunits.html" >9. Výpočet vzdálenosti</option>
+		<option value="distanceunitconversion.html" >10. Výpočet jednotek vzdálenosti</option>
+		<option value="drawmanager.html" >11. Draw Manager</option>
+                <option value="kmlsite.html" >12. KML a GPX</option>
+                <option value="classiclayer.html" >13. Dopravní vrstva</option>
+                <option value="groundoverlay.html" >14. Ground Overlay</option>
+		<option value="heatmaplayer.html" >15. Heat map vrstva</option>
+		<option value="fusiontables.html" >16. Fusion Tables</option>
+	</optgroup>
+</select>
+</p>
      </div>
 <div id="wrap">
 	<div id="content">
 		<br/>
-		<div id="mapa">MAP</div>
+                <iframe style="width: 960px; height: 500px" src="//jsfiddle.net/GmapyJS/0p7yxdm8/1/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+		
                 <div id="htmlBoxHead">Popis</div>
                 <div id="htmlBox">
-                   Funkce createPolygon zobrazuje polygon. Funkci předáváme 
+                    Funkce createPolygon zobrazuje polygon. Funkci předáváme 
                    jako parametr vlastnosti polygonu známé z Google Maps API
-                </div>
-                <div id="jsBoxHead">JavaScript</div>
-                <div id="jsBox">
-                    <pre>
- $(document).ready(function() {
-    $("#mapa").Gmapy({
-        zoom: 14,
-        latitude: 49.814782471725145, 
-        longitude: 18.268461227416992,
-        markers: [{  
-            latitude: 49.814782471725145, 
-            longitude: 18.268461227416992  
-        }]
-    });
- $.Gmapy.createPolygon({
-			color: "#00CC00",
-			fillColor: 'transparent',
-			fillOpacity:	0.0,
-			weight: 	2,
-			coords:	[{
-					latitude: 58.092393, 
-					longitude: 9.883691
-				},{ 
-					latitude: 54.281258,
-					longitude: 13.487207
-				},{ 
-					latitude: 54.740475,
-					longitude: 5.752832
-			}]
- });
-                    </pre>
+                                      
                 </div>
         </div>
 </div>
