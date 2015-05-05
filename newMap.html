@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Mapa a marker | Gmapy.js</title>
@@ -19,25 +14,25 @@ and open the template in the editor.
 <script type="text/javascript"> 
      
 $(document).ready(function() {
-	$("#mapa").Gmapy({
-            zoom: 14,
-            latitude: 49.814782471725145, 
-            longitude: 18.268461227416992,
-            markers: [{  
+	$("#mapaExample").Gmapy({                        // vytvoření objektu Gmapy pro div pojmenovaný mapaExample
+            zoom: 14,                                    // určení přiblížení na mapu na hodnotu 14
+            latitude: 49.814782471725145,                // určení latitude souřadnice, kde bude mapa vycentrována
+            longitude: 18.268461227416992,               // určení longitude souřadnice, kde bude mapa vycentrována
+            markers: [{                                  // vytvoření pole markerů zadaných souřadnicemi latitude a longitude v objektech oddělených čárkou
                     latitude: 49.814782471725145, 
                     longitude: 18.268461227416992  
-            }]
+            }]                                           // konec pole
         });
-        $.Gmapy.createMarker({  
-                latitude: 49.818620,
-		longitude: 18.279634,
-                draggable: true
+        $.Gmapy.createMarker({                           // vytvoří marker a předá jako parametr objekt složený z údajů o markeru, to mohou být například:
+                latitude: 49.818620,                     // latitude souřadnice umístění markeru
+		longitude: 18.279634,                    // longitude souřadnice umístění markeru
+                draggable: true                          // zda bude marker po mapě posouvatelný tažením myši   
         }); 
 });
 </script>
     </head>
     <body>
-        <div id="logoPlanner"></div>
+        <a href="index.html"><div id="logoPlanner"></div></a>
         
     <div id="menu1">
         <table>
@@ -52,7 +47,14 @@ $(document).ready(function() {
         <li><a href="geocode.html">geokodovani</a></li>
         <li><a href="polyline.html">křivka</a></li>
         <li><a href="polygon.html">polygon</a></li>
+        <li><a href="elevation.html">výškový profil</a></li>
+        <li><a href="distanceunits.html">výpočet vzdálenosti</a></li>
+        <li><a href="distanceunitconversion.html">jednotky vzdálenosti</a></li>
         <li><a href="drawmanager.html">draw manager</a></li>
+        <li><a href="kmlsite.html">KML a GPX</a></li>
+        <li><a href="classiclayer.html">dopravní vrstva</a></li>
+        <li><a href="groundoverlay.html">ground overlay</a></li>
+        <li><a href="heatmaplayer.html">heat map vrstva</a></li>
         <li><a href="fusiontables.html">fusion tables</a></li>
         </ul>
         </li>
@@ -62,8 +64,8 @@ $(document).ready(function() {
         <ul class="menu">
         <li><a href="">Dokumentace</a>
         <ul>
-        <li><a href="out/index.html">v češtině</a></li>
-<!--        <li><a href="../css/margin/">v angličtině</a></li>-->
+        <li><a href="dokumentaceJS/cs/out/index.html">v češtině</a></li>
+        <li><a href="dokumentaceJS/en/out/index.html">v angličtině</a></li>
         </ul>
         </li>
         </ul>
@@ -72,7 +74,6 @@ $(document).ready(function() {
         <ul class="menu">
         <li><a href="index.html">Gmapy.js</a>
         <ul>
-<!--        <li><a href="../php/kniha_navstev.php">Průvodce plánovačem</a></li>-->
         <li><a href="aboutGM.html">O gmapy.js</a></li>
         </ul>
         </li>
@@ -81,43 +82,39 @@ $(document).ready(function() {
         </table>
      </div>
              <div id="menu2">
-        <select id="over" style="margin: 4px; width:180px;" >
-            <option>Latitude, Longitude</option>
-            <option selected="selected">Souradnice LatLng</option>
-        </select>
+                 <p id="examples" ><strong>Vyberte příklad:</strong> 
+<select id="examplesGJS" onchange="location.href=this.value">
+	<optgroup label="Základy">
+		<option value="newMap.html" selected='selected'>1. Jednoduchá mapa a marker</option>
+		<option value="events.html" >2. Události</option>
+		<option value="route.html" >3. Trasa</option>
+		<option value="geocode.html" >4. Geokódování a reverzní geokódování</option>
+		<option value="polyline.html" >5. Křivka</option>
+		<option value="polygon.html" >7. Polygon</option>
+		<option value="elevation.html" >8. Výškový profil</option>
+		<option value="distanceunits.html" >9. Výpočet vzdálenosti</option>
+		<option value="distanceunitconversion.html" >10. Výpočet jednotek vzdálenosti</option>
+		<option value="drawmanager.html" >11. Draw Manager</option>
+                <option value="kmlsite.html" >12. KML a GPX</option>
+                <option value="classiclayer.html" >13. Dopravní vrstva</option>
+                <option value="groundoverlay.html" >14. Ground Overlay</option>
+		<option value="heatmaplayer.html" >15. Heat map vrstva</option>
+		<option value="fusiontables.html" >16. Fusion Tables</option>
+	</optgroup>
+</select>
+</p>
      </div>
 <div id="wrap">
 	<div id="content">
 		<br/>
-		<div id="mapa">MAP</div>
+		<iframe style="width: 960px; height: 500px" src="//jsfiddle.net/GmapyJS/y73wuhax/14/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
                 <div id="htmlBoxHead">Popis</div>
                 <div id="htmlBox">
                    Nejprve určíme ID kontejneru, dále definujeme latitude a longitude souřadnice, zoom a další nastavení,
                    která lze provádět u mapy ve standardním API. <br />
                    Marker zapisujeme buď v definici mapy s tím, že zadáme jeho latitude a longitude. Druhou možností vytvoření markeru
-                   je funkce createMarker(), které předáme informace o umístění markeru popřípadě další parametry.
-                   
-                </div>
-                <div id="jsBoxHead">JavaScript</div>
-                <div id="jsBox">
-                    <pre>
- $(document).ready(function() {
-    $("#mapa").Gmapy({
-        zoom: 14,
-        latitude: 49.814782471725145, 
-        longitude: 18.268461227416992,
-        markers: [{  
-            latitude: 49.814782471725145, 
-            longitude: 18.268461227416992  
-        }]
-    });
-    $.Gmapy.createMarker({  
-        latitude: 49.818620,
-        longitude: 18.279634
-    }); 
- });
-                    </pre>
-                </div>
+                   je funkce createMarker(), které předáme informace o umístění markeru popřípadě další parametry.             
+                </div>          
         </div>
 </div>
         <div></div>
