@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Draw Manager | Gmapy.js</title>
@@ -19,23 +14,23 @@ and open the template in the editor.
 <script type="text/javascript"> 
      
 $(document).ready(function() {
-	$("#mapa").Gmapy({
-            zoom: 14,
-            latitude: 49.814782471725145, 
-            longitude: 18.268461227416992
+	$("#mapaExample").Gmapy({                                       // vytvoření objektu Gmapy pro div pojmenovaný mapaExample
+            zoom: 14,                                                   // určení přiblížení na mapu na hodnotu 14
+            latitude: 49.814782471725145,                               // určení latitude souřadnice, kde bude mapa vycentrována
+            longitude: 18.268461227416992                               // určení longitude souřadnice, kde bude mapa vycentrována
         });
         
-        $.Gmapy.addDrawingManager('top-center', 'polyline', [
-      google.maps.drawing.OverlayType.CIRCLE,
+        $.Gmapy.addDrawingManager('top-center', 'polyline', [           // přidá komponentu Drawing Manager do mapy, jako parametry jsou umístění komponenty v mapě (možnosti viz dokumentace), typ defaultně nastaveného tvaru
+      google.maps.drawing.OverlayType.CIRCLE,                           // pole všech tvarů, které chceme zobrazit v komponentě (možnosti viz dokumentace)
       google.maps.drawing.OverlayType.POLYGON,
       google.maps.drawing.OverlayType.POLYLINE,
-      google.maps.drawing.OverlayType.RECTANGLE], null, 
-  {fillColor: '#ffff00',fillOpacity: 1,strokeWeight: 5,zIndex: 1,editable: true}, null, null, null);
+      google.maps.drawing.OverlayType.RECTANGLE], null,                 // null zde představuje žádné zadané vlastnosti pro marker
+  {fillColor: '#ffff00',fillOpacity: 1,strokeWeight: 5,zIndex: 1,editable: true}, null, null, null); // jediné zadané vlastnosti v podobě objektu má kruh (možnosti vlastností viz Google Maps API )
 });
 </script>
     </head>
     <body>
-        <div id="logoPlanner"></div>
+        <a href="index.html"><div id="logoPlanner"></div></a>
         
     <div id="menu1">
         <table>
@@ -50,7 +45,14 @@ $(document).ready(function() {
         <li><a href="geocode.html">geokodovani</a></li>
         <li><a href="polyline.html">křivka</a></li>
         <li><a href="polygon.html">polygon</a></li>
+        <li><a href="elevation.html">výškový profil</a></li>
+        <li><a href="distanceunits.html">výpočet vzdálenosti</a></li>
+        <li><a href="distanceunitconversion.html">jednotky vzdálenosti</a></li>
         <li><a href="drawmanager.html">draw manager</a></li>
+        <li><a href="kmlsite.html">KML a GPX</a></li>
+        <li><a href="classiclayer.html">dopravní vrstva</a></li>
+        <li><a href="groundoverlay.html">ground overlay</a></li>
+        <li><a href="heatmaplayer.html">heat map vrstva</a></li>
         <li><a href="fusiontables.html">fusion tables</a></li>
         </ul>
         </li>
@@ -60,8 +62,8 @@ $(document).ready(function() {
         <ul class="menu">
         <li><a href="">Dokumentace</a>
         <ul>
-        <li><a href="out/index.html">v češtině</a></li>
-<!--        <li><a href="../css/margin/">v angličtině</a></li>-->
+        <li><a href="dokumentaceJS/cs/out/index.html">v češtině</a></li>
+        <li><a href="dokumentaceJS/en/out/index.html">v angličtině</a></li>
         </ul>
         </li>
         </ul>
@@ -70,7 +72,6 @@ $(document).ready(function() {
         <ul class="menu">
         <li><a href="index.html">Gmapy.js</a>
         <ul>
-<!--        <li><a href="../php/kniha_navstev.php">Průvodce plánovačem</a></li>-->
         <li><a href="aboutGM.html">O gmapy.js</a></li>
         </ul>
         </li>
@@ -79,18 +80,38 @@ $(document).ready(function() {
         </table>
      </div>
              <div id="menu2">
-        <select id="over" style="margin: 4px; width:180px;" >
-            <option>Latitude, Longitude</option>
-            <option selected="selected">Souradnice LatLng</option>
-        </select>
+
+                 <p id="examples"><strong>Vyberte příklad:</strong> 
+<select id="examplesGJS" onchange="location.href=this.value">
+	<optgroup label="Základy">
+		<option value="newMap.html">1. Jednoduchá mapa a marker</option>
+		<option value="events.html" >2. Události</option>
+		<option value="route.html" >3. Trasa</option>
+		<option value="geocode.html" >4. Geokódování a reverzní geokódování</option>
+		<option value="polyline.html" >5. Křivka</option>
+		<option value="polygon.html" >7. Polygon</option>
+		<option value="elevation.html" >8. Výškový profil</option>
+		<option value="distanceunits.html" >9. Výpočet vzdálenosti</option>
+		<option value="distanceunitconversion.html" >10. Výpočet jednotek vzdálenosti</option>
+		<option value="drawmanager.html" selected='selected'>11. Draw Manager</option>
+                <option value="kmlsite.html" >12. KML a GPX</option>
+                <option value="classiclayer.html" >13. Dopravní vrstva</option>
+                <option value="groundoverlay.html" >14. Ground Overlay</option>
+		<option value="heatmaplayer.html" >15. Heat map vrstva</option>
+		<option value="fusiontables.html" >16. Fusion Tables</option>
+
+	</optgroup>
+</select>
+</p>
      </div>
 <div id="wrap">
 	<div id="content">
 		<br/>
-		<div id="mapa">MAP</div>
+                
+                <iframe style="width: 960px; height: 500px" src="//jsfiddle.net/GmapyJS/8jzjdhza/4/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
                 <div id="htmlBoxHead">Popis</div>
                 <div id="htmlBox">
-                   Gmapy.js podporuje vkládání Drawing Managera. Pro správné zobrazení je nutné přidat do odkazu:
+                    Gmapy.js podporuje vkládání Drawing Managera. Pro správné zobrazení je nutné přidat do odkazu:
                    &lt;script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true<strong>&libraries=drawing</strong>"&gt;&lt;/script&gt;
                    knihovnu drawing: <strong>&libraries=drawing</strong><br /><br />
                    
@@ -106,29 +127,7 @@ $(document).ready(function() {
                    <strong>polylineOpt</strong> - vlastnosti křivky,<br/><br/>
                    <strong>rectangleOpt</strong> - vlastnosti obdélníku<br/><br/>
                    
-                   Smazat všechny obrazce pomůže funkce deleteDrawingManagerShape(), které nepředáváme žádné parametry.
-                   
-                   
-                </div>
-                <div id="drawingPanel"> 
-                    <button id="delete-button" onclick="$.Gmapy.deleteDrawingManagerShape()">Smazat všechny tvary</button>
-                </div>
-                <div id="jsBoxHead">JavaScript</div>
-                <div id="jsBox">
-                    <pre>
-$.Gmapy.addDrawingManager('top-center', 'polyline', [
-      google.maps.drawing.OverlayType.CIRCLE,
-      google.maps.drawing.OverlayType.POLYGON,
-      google.maps.drawing.OverlayType.POLYLINE,
-      google.maps.drawing.OverlayType.RECTANGLE], null, 
-{fillColor: '#ffff00',fillOpacity: 1,strokeWeight: 5,zIndex: 1,editable: true}, null, null, null);
-
-
-HTML
-                    
-&lt;button id="delete-button" onclick="$.Gmapy.deleteDrawingManagerShape()"&gt;Smazat všechny tvary&lt;/button&gt;
-
-                    </pre>
+                   Smazat všechny obrazce pomůže funkce deleteDrawingManagerShape(), které nepředáváme žádné parametry.     
                 </div>
         </div>
 </div>
